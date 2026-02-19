@@ -3,6 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Modal, TextInput,
 import { useFonts } from 'expo-font';
 import { useRoute, RouteProp, useNavigation } from '@react-navigation/native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { MaterialIcons } from '@expo/vector-icons';
 import Svg, { Circle, Line } from 'react-native-svg';
 import { LinearGradient } from "expo-linear-gradient";
@@ -21,10 +22,13 @@ type RouteParams = {
     balance: string;
 };
 
+const TAB_BAR_HEIGHT = 80;
+
 export default function AccountRecordScreen() {
     const router = useRouter();
     const route = useRoute<RouteProp<{ params: RouteParams }>>();
     const navigation = useNavigation();
+    const insets = useSafeAreaInsets();
     const params = useLocalSearchParams();
     const selectedDateRange = params.selectedDateRange as string | undefined;
     const routeParams = route.params ?? {};
@@ -321,7 +325,7 @@ export default function AccountRecordScreen() {
                         <MaterialIcons name="add" size={20} color="#fff" />
                     </TouchableOpacity>
                     <View style={styles.comContent}>
-                        <ScrollView contentContainerStyle={{ paddingBottom: 180 }}>
+                        <ScrollView contentContainerStyle={{ paddingBottom: Math.max(300, TAB_BAR_HEIGHT + insets.bottom + 60) }} showsVerticalScrollIndicator={false}>
                             {acountDatas.map((acountdata, index) => (
                                 <View key={index} style={styles.tableContainer}>
                                     {acountdata.map((row, rowIndex) => (
@@ -418,16 +422,16 @@ const styles = StyleSheet.create({
     completeBtnText: { fontFamily: 'NotoSansTC-bold', fontSize: 14, color: 'white', fontWeight: 'bold', marginTop: 5 },
     backBtn: { flexDirection: 'row', alignItems: "center", },
     backText: { color: 'white', fontWeight: 'bold', marginTop: 5, fontSize: 16 },
-    comDescriptionBox: { backgroundColor: "#fff", paddingHorizontal: 15, paddingVertical: 10 },
-    comContent: { backgroundColor: '#eee', paddingHorizontal: 12, paddingTop: 16, paddingBottom: 12 },
-    tableContainer: { marginBottom: 14, backgroundColor: '#F0F0F0', borderRadius: 10, overflow: 'hidden', width: '100%', maxWidth: 380, alignSelf: 'center', borderWidth: 1, borderColor: '#ddd' },
-    row: { flexDirection: 'row', alignItems: 'flex-start', paddingHorizontal: 15, paddingVertical: 8, backgroundColor: '#fff', borderBottomWidth: 1, borderBottomColor: '#ddd' },
-    headerRow: { backgroundColor: '#888', minHeight: 42, paddingVertical: 10, paddingTop: 10, paddingBottom: 10, alignItems: 'center' },
-    headerText: { width: 130, fontFamily: 'NotoSansTC-Medium', fontWeight: '600', lineHeight: 22, fontSize: 17, color: 'white' },
-    headerValueText: { flex: 1, flexWrap: 'wrap', paddingLeft: 15, fontFamily: 'NotoSansTC-Medium', lineHeight: 22, fontSize: 16, color: 'white' },
+    comDescriptionBox: { backgroundColor: "#fff", paddingHorizontal: 15, paddingVertical: 8 },
+    comContent: { backgroundColor: '#eee', paddingHorizontal: 12, paddingTop: 10, paddingBottom: 12 },
+    tableContainer: { marginBottom: 10, backgroundColor: '#F0F0F0', borderRadius: 10, overflow: 'hidden', width: '100%', maxWidth: 380, alignSelf: 'center', borderWidth: 1, borderColor: '#ddd' },
+    row: { flexDirection: 'row', alignItems: 'flex-start', paddingHorizontal: 15, paddingVertical: 6, backgroundColor: '#fff', borderBottomWidth: 1, borderBottomColor: '#ddd' },
+    headerRow: { backgroundColor: '#888', minHeight: 38, paddingVertical: 8, paddingTop: 8, paddingBottom: 8, alignItems: 'center' },
+    headerText: { width: 130, fontFamily: 'NotoSansTC-Medium', fontWeight: '600', lineHeight: 20, fontSize: 17, color: 'white' },
+    headerValueText: { flex: 1, flexWrap: 'wrap', paddingLeft: 15, fontFamily: 'NotoSansTC-Medium', lineHeight: 20, fontSize: 16, color: 'white' },
     headerRightGroup: { flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', paddingLeft: 15, gap: 8 },
-    cellText: { paddingVertical: 8, width: 130, borderRightColor: '#ddd', borderRightWidth: 1, fontFamily: 'NotoSansTC-Medium', lineHeight: 22, fontSize: 16, color: 'black' },
-    cellValueText: { paddingVertical: 8, flex: 1, flexWrap: 'wrap', paddingLeft: 15, fontFamily: 'NotoSansTC-Medium', lineHeight: 22, fontSize: 16, color: 'black' },
+    cellText: { paddingVertical: 6, width: 130, borderRightColor: '#ddd', borderRightWidth: 1, fontFamily: 'NotoSansTC-Medium', lineHeight: 20, fontSize: 16, color: 'black' },
+    cellValueText: { paddingVertical: 6, flex: 1, flexWrap: 'wrap', paddingLeft: 15, fontFamily: 'NotoSansTC-Medium', lineHeight: 20, fontSize: 16, color: 'black' },
     shareButton: {
         flexDirection: 'row',
         alignItems: 'center',
