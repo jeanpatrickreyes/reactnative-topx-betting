@@ -27,7 +27,10 @@ export default function AccountRecordScreen() {
     const navigation = useNavigation();
     const params = useLocalSearchParams();
     const selectedDateRange = params.selectedDateRange as string | undefined;
-    const { currentTime, account, balance } = route.params;
+    const routeParams = route.params ?? {};
+    const currentTime = (routeParams.currentTime ?? '').toString();
+    const account = (routeParams.account ?? '').toString();
+    const balance = (routeParams.balance ?? '').toString();
     
     const [fontsLoaded] = useFonts({
         'NotoSansTC-Regular': require('../../../assets/fonts/NotoSansTC-Regular.ttf'),
@@ -138,17 +141,25 @@ export default function AccountRecordScreen() {
             { key: '參考編號', value: '-' },
             { key: '日期 / 時間', value: '-' },
             { key: '投注類別', value: '-' },
-            { key: '細節', value: '2025年7月25日03:11 之戶口結餘: $54.60' },
+            { key: '細節', value: '2026年2月19日14:40之戶口結餘: $9.40' },
             { key: '支出', value: '-' },
             { key: '存入', value: '-' },
         ],
         [
-            { key: '參考編號', value: '5580' },
-            { key: '日期 / 時間', value: '25-07-2025 08:35' },
+            { key: '參考編號', value: '5606' },
+            { key: '日期 / 時間', value: '19-02-2026 14:40' },
             { key: '投注類別', value: '-' },
-            { key: '細節', value: '總費盡即時存款至投注戶口 (參考編號: 2025062900000411)' },
+            { key: '細節', value: '現金存款(24CDC 2D3A5 EF409A5C7)' },
             { key: '支出', value: '-' },
-            { key: '存入', value: '$500.0' },
+            { key: '存入', value: '$500.00' },
+        ],
+        [
+            { key: '參考編號', value: '5608', showShare: 'Yes' },
+            { key: '日期 / 時間', value: '19-02-2026 14:40' },
+            { key: '投注類別', value: '-' },
+            { key: '細節', value: '現金存款' },
+            { key: '支出', value: '-' },
+            { key: '存入', value: '$500.00' },
         ],
     ]);
 
@@ -178,9 +189,9 @@ export default function AccountRecordScreen() {
     return (
         <View style={styles.entireContainer}>
             <View style={styles.topContainer}>
-                <Text style={styles.text}>時間: {formatCurrentTime(currentTime)}</Text>
-                <Text style={styles.text}>投注戶口號碼: {account}</Text>
-                <Text style={styles.text}>結餘: ${balance}</Text>
+                <Text style={styles.text}>時間: {currentTime ? formatCurrentTime(currentTime) : '-'}</Text>
+                <Text style={styles.text}>投注戶口號碼: {account || '-'}</Text>
+                <Text style={styles.text}>結餘: ${balance ? balance : '-'}</Text>
             </View>
             { !isCompleteScreen &&
                 <LinearGradient
@@ -297,7 +308,7 @@ export default function AccountRecordScreen() {
             ) : (
                 <>
                     <View style={styles.comDescriptionBox}>
-                        <Text style={styles.text}>搜尋時段: {dateRange.replace('-', ' 至 ')}</Text>
+                        <Text style={styles.text}>搜尋時段: {dateRange.replace(' - ', ' 至 ')}</Text>
                     </View>
                     <LinearGradient
                         colors={["#ccc", "#eee"]}
@@ -316,18 +327,22 @@ export default function AccountRecordScreen() {
                                     {acountdata.map((row, rowIndex) => (
                                     <View key={rowIndex} style={[styles.row, rowIndex === 0 && styles.headerRow]}>
                                         <Text style={rowIndex === 0 ? styles.headerText : styles.cellText}>{row.key}</Text>
-                                        <Text style={rowIndex === 0 ? styles.headerValueText : styles.cellValueText}>{row.value}</Text>
-                                        {row.key === "參考編號" && row?.showShare === "Yes" && (
-                                            <TouchableOpacity style={styles.shareButton}>
-                                                <Svg width="20" height="20" viewBox="0 0 40 40" fill="none" stroke="black" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
-                                                    <Circle cx="30" cy="10" r="5" />
-                                                    <Circle cx="10" cy="20" r="5" />
-                                                    <Circle cx="30" cy="30" r="5" />
-                                                    <Line x1="25" y1="10" x2="15" y2="20" />
-                                                    <Line x1="25" y1="30" x2="15" y2="20" />
-                                                </Svg>
-                                                <Text style={styles.shareText}>分享注項</Text>
-                                            </TouchableOpacity>
+                                        {rowIndex === 0 && row.key === "參考編號" && row?.showShare === "Yes" ? (
+                                            <View style={styles.headerRightGroup}>
+                                                <Text style={styles.headerValueText}>{row.value}</Text>
+                                                <TouchableOpacity style={styles.shareButton}>
+                                                    <Svg width="20" height="20" viewBox="0 0 40 40" fill="none" stroke="black" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
+                                                        <Circle cx="30" cy="10" r="5" />
+                                                        <Circle cx="10" cy="20" r="5" />
+                                                        <Circle cx="30" cy="30" r="5" />
+                                                        <Line x1="25" y1="10" x2="15" y2="20" />
+                                                        <Line x1="25" y1="30" x2="15" y2="20" />
+                                                    </Svg>
+                                                    <Text style={styles.shareText}>分享注項</Text>
+                                                </TouchableOpacity>
+                                            </View>
+                                        ) : (
+                                            <Text style={rowIndex === 0 ? styles.headerValueText : styles.cellValueText}>{row.value}</Text>
                                         )}
                                     </View>
                                     ))}
@@ -403,15 +418,16 @@ const styles = StyleSheet.create({
     completeBtnText: { fontFamily: 'NotoSansTC-bold', fontSize: 14, color: 'white', fontWeight: 'bold', marginTop: 5 },
     backBtn: { flexDirection: 'row', alignItems: "center", },
     backText: { color: 'white', fontWeight: 'bold', marginTop: 5, fontSize: 16 },
-    comDescriptionBox: {backgroundColor: "#fff", paddingHorizontal: 15, paddingVertical: 8, },
-    comContent: {backgroundColor: 'eee', paddingHorizontal: 12, paddingVertical: 10, },
-    tableContainer: { marginBottom: 10, backgroundColor: '#F0F0F0', borderRadius: 10, overflow: 'hidden', width: '100%', maxWidth: 380, alignSelf: 'center', borderWidth: 1, borderColor: '#ddd'    },
-    row: { flexDirection: 'row', paddingHorizontal: 15, paddingVertical: 5, backgroundColor: '#fff', borderBottomWidth: 1, borderBottomColor: '#ddd' },
-    headerRow: { backgroundColor: '#888', height: 42, paddingTop:  0},
-    headerText: { width: 130, fontFamily: 'NotoSansTC-Medium', fontWeight: '600', lineHeight: 42, fontSize: 17, color: 'white' },
-    headerValueText: { flex: 1, flexWrap: 'wrap', paddingLeft: 15, fontFamily: 'NotoSansTC-Medium', lineHeight: 40, fontSize: 16, color: 'white' },
-    cellText: { paddingVertical: 5, width: 130, borderRightColor: '#ddd', borderRightWidth: 1, fontFamily: 'NotoSansTC-Medium', lineHeight: 20, fontSize: 16, color: 'black' },
-    cellValueText: { paddingVertical: 5, flex: 1, flexWrap: 'wrap', paddingLeft: 15, fontFamily: 'NotoSansTC-Medium', lineHeight: 20, fontSize: 16, color: 'black' },
+    comDescriptionBox: { backgroundColor: "#fff", paddingHorizontal: 15, paddingVertical: 10 },
+    comContent: { backgroundColor: '#eee', paddingHorizontal: 12, paddingTop: 16, paddingBottom: 12 },
+    tableContainer: { marginBottom: 14, backgroundColor: '#F0F0F0', borderRadius: 10, overflow: 'hidden', width: '100%', maxWidth: 380, alignSelf: 'center', borderWidth: 1, borderColor: '#ddd' },
+    row: { flexDirection: 'row', alignItems: 'flex-start', paddingHorizontal: 15, paddingVertical: 8, backgroundColor: '#fff', borderBottomWidth: 1, borderBottomColor: '#ddd' },
+    headerRow: { backgroundColor: '#888', minHeight: 42, paddingVertical: 10, paddingTop: 10, paddingBottom: 10, alignItems: 'center' },
+    headerText: { width: 130, fontFamily: 'NotoSansTC-Medium', fontWeight: '600', lineHeight: 22, fontSize: 17, color: 'white' },
+    headerValueText: { flex: 1, flexWrap: 'wrap', paddingLeft: 15, fontFamily: 'NotoSansTC-Medium', lineHeight: 22, fontSize: 16, color: 'white' },
+    headerRightGroup: { flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', paddingLeft: 15, gap: 8 },
+    cellText: { paddingVertical: 8, width: 130, borderRightColor: '#ddd', borderRightWidth: 1, fontFamily: 'NotoSansTC-Medium', lineHeight: 22, fontSize: 16, color: 'black' },
+    cellValueText: { paddingVertical: 8, flex: 1, flexWrap: 'wrap', paddingLeft: 15, fontFamily: 'NotoSansTC-Medium', lineHeight: 22, fontSize: 16, color: 'black' },
     shareButton: {
         flexDirection: 'row',
         alignItems: 'center',
