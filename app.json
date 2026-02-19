@@ -11,7 +11,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.lks.topx",
-      "buildNumber": "1.0.0",
+      "buildNumber": "2.0.0",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }
@@ -43,14 +43,14 @@
     "experiments": {
       "typedRoutes": true
     },
+    "owner": "jeanpatrickrey",
     "extra": {
       "router": {
         "origin": false
       },
       "eas": {
-        "projectId": "b0f62599-0448-47fe-948e-24556ba99a76"
+        "projectId": "f4e16172-097b-4930-b6f1-0dc833f6d2ed"
       }
-    },
-    "owner": "jeanpatrickrey"
+    }
   }
 }
