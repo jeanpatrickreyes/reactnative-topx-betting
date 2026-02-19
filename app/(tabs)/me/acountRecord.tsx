@@ -169,10 +169,10 @@ export default function AccountRecordScreen() {
     };
 
     const [isTradeTypePickerVisible, setIsTradeTypePickerVisible] = useState(false);
-    const [selectedTradeType, setSelectedTradeType] = useState("所有");
+    const [selectedTradeType, setSelectedTradeType] = useState("");
 
     const [isTypePickerVisible, setIsTypePickerVisible] = useState(false);
-    const [selectedType, setSelectedType] = useState("所有");
+    const [selectedType, setSelectedType] = useState("");
 
 
     return (
@@ -213,11 +213,11 @@ export default function AccountRecordScreen() {
                     <View style={styles.horizonLine}></View>
                     <TouchableOpacity style={[styles.boxBtn, { marginBottom: 12 }]} onPress={() => setIsTradeTypePickerVisible(true)}>
                         <Text style={styles.boxBtnLeftText}>交易種類</Text>
-                        <Text style={styles.boxBtnRightText}>{selectedTradeType}</Text>
+                        <Text style={styles.boxBtnRightText}>{selectedTradeType || ''}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.boxBtn} onPress={() => setIsTypePickerVisible(true)}>
                         <Text style={styles.boxBtnLeftText}>顯示種類</Text>
-                        <Text style={styles.boxBtnRightText}>{selectedType}</Text>
+                        <Text style={styles.boxBtnRightText}>{selectedType || ''}</Text>
                     </TouchableOpacity>
                     <TouchableOpacity style={styles.send} onPress={() => setIsCompleteScreen(true)}>
                         <Text style={styles.sendText}>傳送</Text>
@@ -243,6 +243,7 @@ export default function AccountRecordScreen() {
                                     style={{ width: '100%', marginVertical:14}}
                                     itemStyle={{ fontFamily: 'NotoSansTC-Bold', fontSize: 16}}
                                 >
+                                    <Picker.Item label=" " value="" color='#000' />
                                     <Picker.Item label="所有" value="所有" color='#000' />
                                     <Picker.Item label="賽馬" value="賽馬" color='#000'  />
                                     <Picker.Item label="足球" value="足球" color='#000' />
@@ -273,11 +274,12 @@ export default function AccountRecordScreen() {
                                     </TouchableOpacity>
                                 </View>
                                 <Picker
-                                    selectedValue={selectedTradeType}
+                                    selectedValue={selectedType}
                                     onValueChange={(itemValue) => setSelectedType(itemValue)}
                                     style={{ width: '100%', marginVertical:14 }}
                                     itemStyle={{ fontFamily: 'NotoSansTC-Bold', fontSize: 16}}
-                                >      
+                                >
+                                    <Picker.Item label=" " value="" color='#000' />
                                     <Picker.Item label="所有" value="所有" color='#000' />
                                     <Picker.Item label="已派彩 / 已退款 / 已扣扣之交易" value="已派彩 / 已退款 / 已扣扣之交易"  color='#000'  />
                                 </Picker>
