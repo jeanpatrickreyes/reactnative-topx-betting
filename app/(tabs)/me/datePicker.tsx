@@ -48,30 +48,40 @@ export default function DatePickerScreen() {
                 <StatusBar style="auto" />
                 <View style={styles.topText}>
                     <Text style={styles.dateText}>{formattedDateRange}</Text>
-                    <Text style={styles.introText}>每次最多可以搜尋過去30天內其中8天。 (以香港時間計算）</Text>
+                    <Text style={styles.introText}>每次最多可以搜尋過去30天內其中8天。(以香港時間計算)</Text>
                 </View>
+                <View style={styles.calendarWrapper}>
                 <CalendarPicker
                     key={calendarKey}
                     allowRangeSelection={true}
-                    allowBackwardRangeSelect={true} // Allows selecting end date before start date
-                    showDayStragglers={true} // Ensures previous month's days are clickable
-                    todayBackgroundColor="#01326D"
+                    allowBackwardRangeSelect={true}
+                    showDayStragglers={true}
+                    todayBackgroundColor="transparent"
+                    todayTextStyle={styles.todayTextDark}
+                    todayStyle={styles.todayOutline}
                     selectedDayColor="#01326D"
-                    selectedDayTextColor="#fff"
-                    selectedDayStyle={styles.selectedDay} // Apply custom circle styling
-                    minDate={new Date(2000, 0, 1)} // Ensure old dates are allowed
+                    selectedDayTextColor="#01326D"
+                    selectedDayStyle={styles.selectedDayOutline}
+                    selectedDayTextStyle={styles.selectedDayTextDark}
+                    selectedRangeStartStyle={styles.selectedRangeStartEnd}
+                    selectedRangeEndStyle={styles.selectedRangeStartEnd}
+                    selectedRangeStartTextStyle={styles.selectedRangeStartEndText}
+                    selectedRangeEndTextStyle={styles.selectedRangeStartEndText}
+                    selectedRangeMiddleTextStyle={styles.selectedRangeMiddleText}
+                    selectedRangeStyle={styles.selectedRangeMiddle}
+                    minDate={new Date(2000, 0, 1)}
                     maxDate={today}
                     previousComponent={<Ionicons name="chevron-back" size={16} style={styles.previousIcon} />}
                     nextComponent={<Ionicons name="chevron-forward" size={16} style={styles.nextIcon} />}
                     maxRangeDuration={8}
                     textStyle={{
                         color: '#000',
-                        fontSize: 20, 
+                        fontSize: 20,
                         fontWeight: '400',
                     }}
                     disabledDatesTextStyle={{
                         color: '#bbb',
-                        fontSize: 20, 
+                        fontSize: 20,
                         fontWeight: '400',
                     }}
                     weekdays={['日', '一', '二', '三', '四', '五', '六']}
@@ -79,6 +89,7 @@ export default function DatePickerScreen() {
                         '1月', '2月', '3月', '4月', '5月', '6月',
                         '7月', '8月', '9月', '10月', '11月', '12月'
                     ]}
+                    dayLabelsWrapper={styles.dayLabelsWrapper}
                     onDateChange={(date: Date, type: string) => {
                         if (type === 'START_DATE') {
                             setSelectedStartDate(date);
@@ -88,6 +99,7 @@ export default function DatePickerScreen() {
                         }
                     }}
                 />
+                </View>
                 <View style={styles.horizonLine}></View>
                 <View style={styles.buttons}>
                     <TouchableOpacity
@@ -118,9 +130,9 @@ export default function DatePickerScreen() {
 }
 
 const styles = StyleSheet.create({
-    headerTop: {height: 8, backgroundColor: '#01326D'},
-    container: {padding: 15, backgroundColor: 'white', height: '100%'},
-    topText:{ marginBottom: 30 },
+    headerTop: { height: 8, backgroundColor: '#01326D' },
+    container: { padding: 15, backgroundColor: 'white', height: '100%' },
+    topText: { marginBottom: 40 },
     dateText: {
         fontFamily: 'NotoSansTC-Medium',
         lineHeight: 24,
@@ -128,19 +140,62 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#01326D',
     },
-    introText: { fontFamily: 'NotoSansTC-Regular', lineHeight: 20, fontSize: 14, color: 'black', marginTop: 5 },
-    selectedDay: {
-        backgroundColor: '#01326D',
+    introText: { fontFamily: 'NotoSansTC-Regular', lineHeight: 20, fontSize: 14, color: '#666', marginTop: 5 },
+    todayTextDark: { color: '#01326D' },
+    todayOutline: {
+        backgroundColor: 'transparent',
+        borderWidth: 2,
+        borderColor: '#01326D',
         borderRadius: 50,
         width: 40,
         height: 40,
         alignItems: 'center',
         justifyContent: 'center',
     },
-    horizonLine: { marginTop:15, borderTopWidth: 1, borderTopColor: '#bbb'},
-    buttons: { marginTop: -15, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'},
-    resetButton: { width: '30%', borderColor: '#01326D', borderWidth: 1, borderRadius: 21, marginTop: 25, padding: 12, flexDirection: 'row', alignItems: 'center', justifyContent:'center', height:42},
-    okButton: { width: '66%', backgroundColor: '#01326D', borderRadius: 20, marginTop: 25, padding: 12, flexDirection: 'row', alignItems: 'center', justifyContent:'center'},
+    selectedDayOutline: {
+        backgroundColor: 'transparent',
+        borderWidth: 1,
+        borderColor: '#01326D',
+        borderRadius: 50,
+        width: 40,
+        height: 40,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    selectedDayTextDark: { color: '#01326D' },
+    selectedRangeStartEnd: {
+        backgroundColor: '#01326D',
+        width: 40,
+        height: 40,
+        borderRadius: 20,
+        borderTopLeftRadius: 20,
+        borderTopRightRadius: 20,
+        borderBottomLeftRadius: 20,
+        borderBottomRightRadius: 20,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    selectedRangeStartEndText: { color: '#fff' },
+    selectedRangeMiddle: {
+        backgroundColor: '#B8D4E8',
+        // alignSelf: 'stretch',
+        width: '100%',
+        height: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    selectedRangeMiddleText: { color: '#5B8FB9' },
+    calendarWrapper: { marginTop: 8 },
+    dayLabelsWrapper: {
+        width: '100%',
+        paddingHorizontal: 0,
+        alignSelf: 'center',
+        justifyContent: 'space-around',
+    },
+    horizonLine: { marginTop: 24, borderTopWidth: 1, borderTopColor: '#bbb' },
+    buttons: { marginTop: 0, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
+    resetButton: { width: '30%', borderColor: '#01326D', borderWidth: 1, borderRadius: 21, marginTop: 32, padding: 12, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', height: 42 },
+    okButton: { width: '66%', backgroundColor: '#01326D', borderRadius: 20, marginTop: 32, padding: 12, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' },
     resetButtonText: { fontFamily: 'NotoSansTC-Medium', lineHeight: 20, fontSize: 16, color: '#01326D', },
     okButtonText: { fontFamily: 'NotoSansTC-Medium', lineHeight: 20, fontSize: 16, color: '#fff', },
     bottomTabs: {
