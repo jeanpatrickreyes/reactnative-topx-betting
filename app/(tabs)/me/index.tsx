@@ -5,6 +5,7 @@ import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { useFonts } from 'expo-font';
 import { useRouter } from 'expo-router';
 import { useFocusEffect } from '@react-navigation/native';
+import { LinearGradient } from 'expo-linear-gradient';
 import CustomText from '../../../components/CustomText';
 
 export default function ProfileScreen() {
@@ -70,6 +71,10 @@ export default function ProfileScreen() {
               style={styles.profileTop}
               resizeMode="cover" 
           >
+            <LinearGradient
+              colors={['rgba(1,50,109,0.15)', 'transparent', 'rgba(1,50,109,0.08)']}
+              style={StyleSheet.absoluteFill}
+            />
             <View style={styles.profileBalance}>
                 <Text style={styles.balanceText}>結餘</Text>
                 <TouchableOpacity
@@ -86,27 +91,27 @@ export default function ProfileScreen() {
             <Text style={styles.account}>投注戶口號碼: {account}</Text>
         </ImageBackground>
         <View style={styles.profileCenter}>
-            <View style={styles.profileCenterDiv}>
-                <TouchableOpacity style={styles.profileCenterBox}>
+            <View style={styles.quickLinksRow}>
+                <TouchableOpacity style={styles.quickLinkCard} activeOpacity={0.8}>
                   <Image 
                     source={require('../../../assets/images/圖片_20250201015446.png')} 
-                    style={{ width: 63, height: 63, resizeMode: 'contain', borderRadius: 31.5 }} 
+                    style={styles.quickLinkIcon} 
                   />
-                  <Text style={styles.myCouponsText}>轉賬服務</Text>
+                  <Text style={styles.quickLinkLabel}>轉賬服務</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.profileCenterBox}>
+                <TouchableOpacity style={styles.quickLinkCard} activeOpacity={0.8}>
                   <Image 
                     source={require('../../../assets/images/圖片_20250201015442.png')} 
-                    style={{ width: 63, height: 63, resizeMode: 'contain', borderRadius: 31.5 }}
+                    style={styles.quickLinkIcon}
                   />
-                  <Text style={styles.myCouponsText}>是次交易紀錄</Text>
+                  <Text style={styles.quickLinkLabel}>是次交易紀錄</Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.profileCenterBox} onPress={handleAccountRecordPress}>
+                <TouchableOpacity style={styles.quickLinkCard} onPress={handleAccountRecordPress} activeOpacity={0.8}>
                   <Image 
                     source={require('../../../assets/images/圖片_20250201015440.png')} 
-                    style={{ width: 63, height: 63, resizeMode: 'contain', borderRadius: 31.5 }}
+                    style={styles.quickLinkIcon}
                   />
-                  <Text style={styles.myCouponsText}>戶口紀錄</Text>
+                  <Text style={styles.quickLinkLabel}>戶口紀錄</Text>
                 </TouchableOpacity>
             </View>
         </View>
@@ -136,7 +141,7 @@ export default function ProfileScreen() {
                         source={require('../../../assets/images/圖片_20250201015436.png')} 
                         style={{ width: 32, height: 32, resizeMode: 'contain' }} // Adjust size accordingly
                       />
-                      <Text style={styles.suggestionText}>意見/ 建議</Text>
+                      <Text style={styles.suggestionText}>意見/建議</Text>
                   </View>
                   <MaterialCommunityIcons name="chevron-right" size={24} color="black" />
               </View>
@@ -192,33 +197,38 @@ const styles = StyleSheet.create({
     marginHorizontal: 12,
     backgroundColor: 'transparent',
     marginTop: -55,
+  },
+  quickLinksRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 0,
+    gap: 8,
+  },
+  quickLinkCard: {
+    flex: 1,
+    backgroundColor: 'white',
+    borderRadius: 10,
+    paddingVertical: 12,
+    paddingHorizontal: 4,
+    alignItems: 'center',
+    justifyContent: 'center',
+    elevation: 10,
     shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
+    shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 2,
   },
-
-  profileCenterDiv: {
-    width: '100%',
-    borderWidth: 0,
-    borderRadius: 10,
-    backgroundColor: 'white',
-    elevation: 10,
-    paddingHorizontal: 0,
-    paddingTop:12,
-    paddingBottom: 13,
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between'
+  quickLinkIcon: {
+    width: 63,
+    height: 63,
+    resizeMode: 'contain',
+    borderRadius: 31.5,
   },
-
-  profileCenterBox: {
-    width: '33%',
-    alignItems: 'center',
-    flexDirection: 'column',
+  quickLinkLabel: {
+    fontFamily: 'NotoSansTC-Regular',
+    fontSize: 17,
+    color: '#333',
+    marginTop: 6,
   },
   iconBackground: {
     backgroundColor: 'black', 
@@ -307,7 +317,7 @@ const styles = StyleSheet.create({
     width: '100%', 
     borderWidth: 0,
     borderRadius: 40,
-    backgroundColor: '#fff',
+    backgroundColor: '#01326D',
     marginTop: 40,
     paddingVertical: 10,
     flexDirection: 'row',
@@ -318,6 +328,6 @@ const styles = StyleSheet.create({
     fontFamily: 'NotoSansTC-Medium',
     lineHeight: 20,
     fontSize: 16,
-    color: '#01326D',
+    color: '#fff',
   }
 });

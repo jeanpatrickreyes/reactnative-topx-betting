@@ -6,11 +6,12 @@ import { useRouter } from "expo-router";
 type Props = {
   title: string;
   hasBackButton?: boolean;
+  backIconOnly?: boolean;
   hasRightButton?: boolean;
   onClickRight?: () => void;
 };
 
-export default function CustomHeader({ title, hasBackButton = false, hasRightButton = false, onClickRight, }: Props) {
+export default function CustomHeader({ title, hasBackButton = false, backIconOnly = false, hasRightButton = false, onClickRight, }: Props) {
   const router = useRouter();
 
   return (
@@ -18,12 +19,12 @@ export default function CustomHeader({ title, hasBackButton = false, hasRightBut
       {hasBackButton && (
         <TouchableOpacity onPress={() => router.back()} style={styles.backBtn}>
           <MaterialIcons
-            name="chevron-left"
-            size={28}
+            name="arrow-back"
+            size={24}
             color="white"
             style={{ marginTop: 2 }}
           />
-          <Text style={styles.backText}>返回</Text>
+          {!backIconOnly && <Text style={styles.backText}>返回</Text>}
         </TouchableOpacity>
       )}
       <Text style={styles.title}>{title}</Text>
