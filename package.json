@@ -3,10 +3,11 @@
   "main": "expo-router/entry",
   "version": "1.0.0",
   "scripts": {
-    "start": "expo start",
+    "set-ios-simulator": "node scripts/set-ios-simulator.js",
+    "start": "node scripts/set-ios-simulator.js 2>/dev/null || true && expo start",
     "reset-project": "node ./scripts/reset-project.js",
     "android": "expo run:android",
-    "ios": "expo run:ios",
+    "ios": "expo run:ios --device \"iPhone 16 Pro Max\"",
     "web": "expo start --web",
     "test": "jest --watchAll",
     "lint": "expo lint"
