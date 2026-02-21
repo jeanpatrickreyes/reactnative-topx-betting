@@ -64,6 +64,7 @@ export default function AccountRecordScreen() {
                     <CustomHeader
                         title="戶口紀錄"
                         hasBackButton={true}
+                        backIconOnly={false}
                     />
                 ),
             });
@@ -226,7 +227,7 @@ export default function AccountRecordScreen() {
                         <Text style={styles.boxBtnRightText}>{dateRange}</Text>
                     </TouchableOpacity>
                     <View style={styles.horizonLine}></View>
-                    <TouchableOpacity style={[styles.boxBtn, { marginBottom: 12 }]} onPress={() => setIsTradeTypePickerVisible(true)}>
+                    <TouchableOpacity style={[styles.boxBtn, { marginBottom: 14 }]} onPress={() => setIsTradeTypePickerVisible(true)}>
                         <Text style={styles.boxBtnLeftText}>交易種類</Text>
                         <Text style={styles.boxBtnRightText}>{selectedTradeType || ''}</Text>
                     </TouchableOpacity>
@@ -265,7 +266,7 @@ export default function AccountRecordScreen() {
                                     <Picker.Item label="六合彩" value="六合彩" color='#000' />
                                 </Picker>
                                 <TouchableOpacity
-                                    style={{backgroundColor: "#01326D", borderRadius: 20, height: 40, alignItems: 'center', justifyContent: 'center' }}
+                                    style={{backgroundColor: "#002D72", borderRadius: 20, height: 40, alignItems: 'center', justifyContent: 'center' }}
                                     onPress={() => setIsTradeTypePickerVisible(false)}
                                 >
                                     <Text style={{ color: "white", fontSize: 16, fontFamily: 'NotoSansTC-Medium'  }}>完成</Text>
@@ -299,7 +300,7 @@ export default function AccountRecordScreen() {
                                     <Picker.Item label="已派彩 / 已退款 / 已扣扣之交易" value="已派彩 / 已退款 / 已扣扣之交易"  color='#000'  />
                                 </Picker>
                                 <TouchableOpacity
-                                    style={{backgroundColor: "#01326D", borderRadius: 21, height: 42, alignItems: 'center', justifyContent: 'center' }}
+                                    style={{backgroundColor: "#002D72", borderRadius: 21, height: 42, alignItems: 'center', justifyContent: 'center' }}
                                     onPress={() => setIsTypePickerVisible(false)}
                                 >
                                     <Text style={{ color: "white", fontSize: 16, fontFamily: 'NotoSansTC-Medium'  }}>完成</Text>
@@ -403,28 +404,28 @@ export default function AccountRecordScreen() {
 };
 
 const styles = StyleSheet.create({
-    entireContainer: {height: '100%', position: 'relative', backgroundColor: "#eee"},
-    topContainer: { backgroundColor: '#fff', paddingHorizontal: 15, paddingBottom: 8, paddingTop:6 },
-    text: { fontFamily: 'NotoSansTC-Regular', lineHeight: 19, fontSize: 14, color: 'black' },
-    destext: { fontFamily: 'NotoSansTC-Regular', fontSize: 14, color: 'black', marginTop:2 },
-    bottomContainer: { backgroundColor: '#F0F0F0', paddingHorizontal: 12,  },
-    dateBtns: { flexDirection: 'row', alignItems: 'center', marginTop: 15, marginBottom: 11, gap: 10 },
-    dateBtn: { borderColor: '#01326D', borderWidth: 1, borderRadius: 20, paddingHorizontal: 18, paddingTop: 2, paddingBottom:4, backgroundColor: 'white' },
-    dateBtnText: { fontFamily: 'NotoSansTC-Medium', lineHeight: 20, fontSize: 14, color: '#01326D' },
-    selectedDateBtn: { backgroundColor: '#01326D' },
+    entireContainer: {height: '100%', position: 'relative', backgroundColor: '#F2F2F2'},
+    topContainer: { backgroundColor: '#fff', paddingHorizontal: 15, paddingTop: 11, paddingBottom: 11},
+    text: { fontFamily: 'NotoSansTC-Regular', lineHeight: 19, fontSize: 15, color: 'black' },
+    destext: { fontFamily: 'NotoSansTC-Regular', fontSize: 15, color: 'black', marginTop:2 },
+    bottomContainer: { backgroundColor: '#F2F2F2', paddingHorizontal: 12,  },
+    dateBtns: { flexDirection: 'row', alignItems: 'center', marginTop: 17, marginBottom: 12, gap: 10 },
+    dateBtn: { borderColor: '#002D72', borderWidth: 1, borderRadius: 20, paddingHorizontal: 18, paddingTop: 4, paddingBottom:6, backgroundColor: 'white' },
+    dateBtnText: { fontFamily: 'NotoSansTC-Medium', lineHeight: 20, fontSize: 15, color: '#002D72' },
+    selectedDateBtn: { backgroundColor: '#002D72' },
     selectedDateBtnText: { color: 'white' },
-    boxBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', backgroundColor: 'white', paddingTop: 8, paddingBottom: 8, paddingHorizontal: 15, borderColor: '#A0A0A0', borderWidth: 1.2, borderRadius: 5 },
-    boxBtnLeftText: { fontFamily: 'NotoSansTC-Medium', lineHeight: 24, fontSize: 16, color: 'black' },
-    boxBtnRightText: { fontFamily: 'NotoSansTC-bold', lineHeight: 24, fontWeight: 'bold', fontSize: 16, color: 'black' },
-    horizonLine: { borderBottomWidth: 0.5, borderColor: "#A0A0A0", height: 26, marginBottom: 26 },
-    send: { width: '100%', backgroundColor: '#01326D', borderRadius: 20, marginTop: 28, height: 40, flexDirection: 'row', alignItems: 'center', justifyContent:'center'}, 
-    sendText: { fontFamily: 'NotoSansTC-Medium', lineHeight: 20, fontSize: 16, color: '#fff' },
+    boxBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', backgroundColor: 'white', paddingTop: 11, paddingBottom: 11, paddingHorizontal: 15, borderColor: '#A0A0A0', borderWidth: 1.2, borderRadius: 5 },
+    boxBtnLeftText: { fontFamily: 'NotoSansTC-Medium', lineHeight: 24, fontSize: 19, color: 'black' },
+    boxBtnRightText: { fontFamily: 'NotoSansTC-bold', lineHeight: 24, fontWeight: 'bold', fontSize: 19, color: 'black' },
+    horizonLine: { borderBottomWidth: 0.5, borderColor: "#A0A0A0", height: 26, marginTop: 3, marginBottom: 29 },
+    send: { width: '100%', backgroundColor: '#002D72', borderRadius: 20, marginTop: 28, height: 44, flexDirection: 'row', alignItems: 'center', justifyContent:'center'}, 
+    sendText: { fontFamily: 'NotoSansTC-Medium', lineHeight: 20, fontSize: 18, color: '#fff' },
     completeBtnText: { fontFamily: 'NotoSansTC-bold', fontSize: 14, color: 'white', fontWeight: 'bold', marginTop: 5 },
     backBtn: { flexDirection: 'row', alignItems: "center", },
     backText: { color: 'white', fontWeight: 'bold', marginTop: 5, fontSize: 16 },
     comDescriptionBox: { backgroundColor: "#fff", paddingHorizontal: 15, paddingVertical: 8 },
-    comContent: { backgroundColor: '#eee', paddingHorizontal: 12, paddingTop: 10, paddingBottom: 12 },
-    tableContainer: { marginBottom: 10, backgroundColor: '#F0F0F0', borderRadius: 10, overflow: 'hidden', width: '100%', maxWidth: 380, alignSelf: 'center', borderWidth: 1, borderColor: '#ddd' },
+    comContent: { backgroundColor: '#F2F2F2', paddingHorizontal: 12, paddingTop: 10, paddingBottom: 12 },
+    tableContainer: { marginBottom: 10, backgroundColor: '#F2F2F2', borderRadius: 10, overflow: 'hidden', width: '100%', maxWidth: 380, alignSelf: 'center', borderWidth: 1, borderColor: '#ddd' },
     row: { flexDirection: 'row', alignItems: 'flex-start', paddingHorizontal: 15, paddingVertical: 6, backgroundColor: '#fff', borderBottomWidth: 1, borderBottomColor: '#ddd' },
     headerRow: { backgroundColor: '#888', minHeight: 38, paddingVertical: 8, paddingTop: 8, paddingBottom: 8, alignItems: 'center' },
     headerText: { width: 130, fontFamily: 'NotoSansTC-Medium', fontWeight: '600', lineHeight: 20, fontSize: 17, color: 'white' },
@@ -471,7 +472,7 @@ const styles = StyleSheet.create({
     modalTitle: { fontSize: 18, fontWeight: 'bold', marginBottom: 10 },
     input: { borderWidth: 1, borderColor: '#ddd', padding: 10, marginBottom: 10, borderRadius: 5 },
     modalButtons: { flexDirection: 'row', justifyContent: 'space-between' },
-    modalButton: { padding: 10, backgroundColor: '#01326D', borderRadius: 5 },
+    modalButton: { padding: 10, backgroundColor: '#002D72', borderRadius: 5 },
     modalButtonText: { color: 'white' },
     bottomTabs: {
         position: 'absolute',

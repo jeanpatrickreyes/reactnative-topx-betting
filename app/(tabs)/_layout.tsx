@@ -16,7 +16,7 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        headerStyle: { backgroundColor: '#01326D', height: 110 },
+        headerStyle: { backgroundColor: '#002D72', height: 110 },
         headerTintColor: 'white',
         headerTitleStyle: { fontSize: 20, fontFamily: 'NotoSansTC-Bold' },
         headerTitleAlign: 'center',
@@ -75,7 +75,7 @@ const tabOptionsMore = (label: string) => ({
   tabBarIcon: ({ focused }: { focused: boolean }) => (
     <View style={styles.tabContainer}>
       <View style={[styles.iconWrapper, focused && styles.iconWrapperFocused]}>
-        <MaterialIcons name="more-vert" size={22} color={focused ? '#01326D' : '#333'} />
+        <MaterialIcons name="more-vert" size={22} color={focused ? '#002D72' : '#333'} />
       </View>
       <Text style={[styles.tabText]}>{label}</Text>
     </View>

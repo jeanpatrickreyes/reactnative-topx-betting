@@ -19,8 +19,8 @@ export default function CustomHeader({ title, hasBackButton = false, backIconOnl
       {hasBackButton && (
         <TouchableOpacity onPress={() => router.back()} style={styles.backBtn}>
           <MaterialIcons
-            name="arrow-back"
-            size={24}
+            name="chevron-left"
+            size={28}
             color="white"
             style={{ marginTop: 2 }}
           />
@@ -40,7 +40,7 @@ export default function CustomHeader({ title, hasBackButton = false, backIconOnl
 const styles = StyleSheet.create({
   container: {
     height: 125,
-    backgroundColor: "#01326D",
+    backgroundColor: "#002D72",
     justifyContent: "flex-end",
     alignItems: "center",
     paddingBottom: 18,
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
   backText: {
     color: "white",
     fontWeight: "bold",
-    marginLeft: 0,
+    marginLeft: 6,
     fontSize: 16,
   },
 

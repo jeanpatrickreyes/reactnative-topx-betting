@@ -59,8 +59,8 @@ export default function DatePickerScreen() {
                     todayBackgroundColor="transparent"
                     todayTextStyle={styles.todayTextDark}
                     todayStyle={styles.todayOutline}
-                    selectedDayColor="#01326D"
-                    selectedDayTextColor="#01326D"
+                    selectedDayColor="#002D72"
+                    selectedDayTextColor="#002D72"
                     selectedDayStyle={styles.selectedDayOutline}
                     selectedDayTextStyle={styles.selectedDayTextDark}
                     selectedRangeStartStyle={styles.selectedRangeStartEnd}
@@ -130,7 +130,7 @@ export default function DatePickerScreen() {
 }
 
 const styles = StyleSheet.create({
-    headerTop: { height: 8, backgroundColor: '#01326D' },
+    headerTop: { height: 8, backgroundColor: '#002D72' },
     container: { padding: 15, backgroundColor: 'white', height: '100%' },
     topText: { marginBottom: 40 },
     dateText: {
@@ -138,14 +138,14 @@ const styles = StyleSheet.create({
         lineHeight: 24,
         fontSize: 20,
         fontWeight: 'bold',
-        color: '#01326D',
+        color: '#002D72',
     },
     introText: { fontFamily: 'NotoSansTC-Regular', lineHeight: 20, fontSize: 14, color: '#666', marginTop: 5 },
-    todayTextDark: { color: '#01326D' },
+    todayTextDark: { color: '#002D72' },
     todayOutline: {
         backgroundColor: 'transparent',
         borderWidth: 2,
-        borderColor: '#01326D',
+        borderColor: '#002D72',
         borderRadius: 50,
         width: 40,
         height: 40,
@@ -155,16 +155,16 @@ const styles = StyleSheet.create({
     selectedDayOutline: {
         backgroundColor: 'transparent',
         borderWidth: 1,
-        borderColor: '#01326D',
+        borderColor: '#002D72',
         borderRadius: 50,
         width: 40,
         height: 40,
         alignItems: 'center',
         justifyContent: 'center',
     },
-    selectedDayTextDark: { color: '#01326D' },
+    selectedDayTextDark: { color: '#002D72' },
     selectedRangeStartEnd: {
-        backgroundColor: '#01326D',
+        backgroundColor: '#002D72',
         width: 40,
         height: 40,
         borderRadius: 20,
@@ -196,9 +196,9 @@ const styles = StyleSheet.create({
     },
     horizonLine: { marginTop: 20, borderTopWidth: 1, borderTopColor: '#bbb' },
     buttons: { marginTop: -20, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
-    resetButton: { width: '30%', borderColor: '#01326D', borderWidth: 1, borderRadius: 21, marginTop: 32, padding: 12, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', height: 42 },
-    okButton: { width: '66%', backgroundColor: '#01326D', borderRadius: 20, marginTop: 32, padding: 12, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' },
-    resetButtonText: { fontFamily: 'NotoSansTC-Medium', lineHeight: 20, fontSize: 16, color: '#01326D', },
+    resetButton: { width: '30%', borderColor: '#002D72', borderWidth: 1, borderRadius: 21, marginTop: 32, padding: 12, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', height: 42 },
+    okButton: { width: '66%', backgroundColor: '#002D72', borderRadius: 20, marginTop: 32, padding: 12, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' },
+    resetButtonText: { fontFamily: 'NotoSansTC-Medium', lineHeight: 20, fontSize: 16, color: '#002D72', },
     okButtonText: { fontFamily: 'NotoSansTC-Medium', lineHeight: 20, fontSize: 16, color: '#fff', },
     bottomTabs: {
         position: 'absolute',
