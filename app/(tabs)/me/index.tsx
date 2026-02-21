@@ -91,28 +91,30 @@ export default function ProfileScreen() {
             <Text style={styles.account}>投注戶口號碼: {account}</Text>
         </ImageBackground>
         <View style={styles.profileCenter}>
-            <View style={styles.quickLinksRow}>
-                <TouchableOpacity style={styles.quickLinkCard} activeOpacity={0.8}>
-                  <Image 
-                    source={require('../../../assets/images/圖片_20250201015446.png')} 
-                    style={styles.quickLinkIcon} 
-                  />
-                  <Text style={styles.quickLinkLabel}>轉賬服務</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.quickLinkCard} activeOpacity={0.8}>
-                  <Image 
-                    source={require('../../../assets/images/圖片_20250201015442.png')} 
-                    style={styles.quickLinkIcon}
-                  />
-                  <Text style={styles.quickLinkLabel}>是次交易紀錄</Text>
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.quickLinkCard} onPress={handleAccountRecordPress} activeOpacity={0.8}>
-                  <Image 
-                    source={require('../../../assets/images/圖片_20250201015440.png')} 
-                    style={styles.quickLinkIcon}
-                  />
-                  <Text style={styles.quickLinkLabel}>戶口紀錄</Text>
-                </TouchableOpacity>
+            <View style={styles.quickLinksBox}>
+                <View style={styles.quickLinksRow}>
+                    <TouchableOpacity style={styles.quickLinkCard} activeOpacity={0.8}>
+                      <Image 
+                        source={require('../../../assets/images/圖片_20250201015446.png')} 
+                        style={styles.quickLinkIcon} 
+                      />
+                      <Text style={styles.quickLinkLabel}>轉賬服務</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.quickLinkCard} activeOpacity={0.8}>
+                      <Image 
+                        source={require('../../../assets/images/圖片_20250201015442.png')} 
+                        style={styles.quickLinkIcon}
+                      />
+                      <Text style={styles.quickLinkLabel}>是次交易紀錄</Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity style={styles.quickLinkCard} onPress={handleAccountRecordPress} activeOpacity={0.8}>
+                      <Image 
+                        source={require('../../../assets/images/圖片_20250201015440.png')} 
+                        style={styles.quickLinkIcon}
+                      />
+                      <Text style={styles.quickLinkLabel}>戶口紀錄</Text>
+                    </TouchableOpacity>
+                </View>
             </View>
         </View>
         <View style={styles.profileBottom}>
@@ -156,7 +158,7 @@ export default function ProfileScreen() {
 
 const styles = StyleSheet.create({
   profileTop: {
-    height: 175,
+    height: 195,
     paddingHorizontal: 24,
   },
   profileBalance: {
@@ -165,7 +167,7 @@ const styles = StyleSheet.create({
   },
   balanceText: {
     fontFamily: 'NotoSansTC-Bold',
-    fontSize: 17,
+    fontSize: 18,
     color: 'white',
   },
   profileButton: {
@@ -189,8 +191,8 @@ const styles = StyleSheet.create({
   },
   account: {
     fontFamily: 'NotoSansTC-Bold',
-    marginTop: 3,
-    fontSize: 14,
+    marginTop: 8,
+    fontSize: 16,
     color: '#fff',
   },
   profileCenter: {
@@ -198,37 +200,41 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
     marginTop: -55,
   },
-  quickLinksRow: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    marginTop: 0,
-    gap: 8,
-  },
-  quickLinkCard: {
-    flex: 1,
+  quickLinksBox: {
     backgroundColor: 'white',
     borderRadius: 10,
     paddingVertical: 12,
-    paddingHorizontal: 4,
-    alignItems: 'center',
-    justifyContent: 'center',
+    paddingHorizontal: 8,
     elevation: 10,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.2,
     shadowRadius: 2,
+    marginTop: -8,
+  },
+  quickLinksRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  quickLinkCard: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 4,
+    paddingHorizontal: 4,
   },
   quickLinkIcon: {
-    width: 63,
-    height: 63,
+    width: 70,
+    height: 70,
     resizeMode: 'contain',
     borderRadius: 31.5,
   },
   quickLinkLabel: {
     fontFamily: 'NotoSansTC-Regular',
-    fontSize: 17,
+    fontSize: 19,
     color: '#333',
-    marginTop: 6,
+    marginTop: -3,
   },
   iconBackground: {
     backgroundColor: 'black', 
@@ -242,8 +248,9 @@ const styles = StyleSheet.create({
   },
   myHkjc: {
     fontFamily: 'NotoSansTC-Regular',
-    fontSize: 18,
+    fontSize: 20,
     color: 'black',
+    marginBottom: 3,
   },
   myCouponsView: {
     flexDirection: 'row'
@@ -263,7 +270,7 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     marginTop: 10,
     paddingLeft: 10,
-    paddingTop: 12,
+    paddingTop: 18,
     paddingBottom: 8,
     gap: 12
   },
@@ -277,7 +284,7 @@ const styles = StyleSheet.create({
   },
   myCouponsText: {
     fontFamily: 'NotoSansTC-Regular',
-    fontSize: 17,
+    fontSize: 19,
     color: '#333'
   },
   suggestion: {
@@ -286,9 +293,9 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: '#fff',
     elevation: 10,
-    marginTop: 23,
+    marginTop: 26,
     paddingHorizontal: 10,
-    paddingVertical: 7,
+    paddingVertical: 9,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
@@ -305,7 +312,7 @@ const styles = StyleSheet.create({
   },
   suggestionText: {
     fontFamily: 'NotoSansTC-Regular',
-    fontSize: 17,
+    fontSize: 18,
     color: '#000',
     marginLeft: 10,
   },
@@ -318,8 +325,8 @@ const styles = StyleSheet.create({
     borderWidth: 0,
     borderRadius: 40,
     backgroundColor: '#01326D',
-    marginTop: 40,
-    paddingVertical: 10,
+    marginTop: 50,
+    paddingVertical: 13,
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent:'center'
@@ -327,7 +334,7 @@ const styles = StyleSheet.create({
   logoutText: {
     fontFamily: 'NotoSansTC-Medium',
     lineHeight: 20,
-    fontSize: 16,
+    fontSize: 18,
     color: '#fff',
   }
 });

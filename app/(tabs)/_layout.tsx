@@ -22,13 +22,16 @@ export default function TabLayout() {
         headerTitleAlign: 'center',
         tabBarStyle: Platform.select({
           ios: { 
-            height: 80,
+            height: 87,
             position: 'absolute',
             backgroundColor: 'white',
             borderWidth: 0,
-            borderTopWidth: 0,
+            paddingHorizontal: 8,
+            borderTopWidth: 1,
+            borderTopColor: '#ddd',
           },
           default: {
+            height: 87,
             borderWidth: 0,
             backgroundColor: 'white',
           },
@@ -60,9 +63,9 @@ const tabOptions = (imagePath: string, label: string) => ({
   tabBarIcon: ({ focused }: { focused: boolean }) => (
     <View style={styles.tabContainer}>
       <View style={[styles.iconWrapper, focused && styles.iconWrapperFocused]}>
-        <Image source={imageMap[imagePath]} style={{ width: 22, height: 22, resizeMode: 'contain' }} />
+        <Image source={imageMap[imagePath]} style={{ width: 26, height: 26, resizeMode: 'contain' }} />
       </View>
-      <Text style={[styles.tabText, focused && styles.tabTextFocused]}>{label}</Text>
+      <Text style={[styles.tabText]}>{label}</Text>
     </View>
   ),
 });
@@ -74,7 +77,7 @@ const tabOptionsMore = (label: string) => ({
       <View style={[styles.iconWrapper, focused && styles.iconWrapperFocused]}>
         <MaterialIcons name="more-vert" size={22} color={focused ? '#01326D' : '#333'} />
       </View>
-      <Text style={[styles.tabText, focused && styles.tabTextFocused]}>{label}</Text>
+      <Text style={[styles.tabText]}>{label}</Text>
     </View>
   ),
 });
@@ -91,18 +94,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 20,
+    marginTop: 3,
   },
   iconWrapperFocused: {
-    backgroundColor: '#E5E8EB',
+    backgroundColor: '#E5EEF3',
   },
   tabText: {
-    fontSize: 12,
+    fontSize: 13,
     color: 'black',
     fontFamily: 'NotoSansTC-Regular',
     fontWeight: 'bold',
-    marginTop: 4,
-  },
-  tabTextFocused: {
-    color: '#01326D',
   },
 });
