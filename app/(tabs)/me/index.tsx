@@ -190,7 +190,7 @@ const styles = StyleSheet.create({
     textAlignVertical: 'center'
   },
   account: {
-    fontFamily: 'NotoSansTC-Bold',
+    fontFamily: 'NotoSansTC-Medium',
     marginTop: 8,
     fontSize: 16,
     color: '#fff',
@@ -233,7 +233,7 @@ const styles = StyleSheet.create({
   quickLinkLabel: {
     fontFamily: 'NotoSansTC-Medium',
     fontSize: 19,
-    color: '#333',
+    color: '#555',
     marginTop: -3,
   },
   iconBackground: {
@@ -285,7 +285,7 @@ const styles = StyleSheet.create({
   myCouponsText: {
     fontFamily: 'NotoSansTC-Medium',
     fontSize: 19,
-    color: '#333'
+    color: '#555'
   },
   suggestion: {
     width: '100%', 
