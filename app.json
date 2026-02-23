@@ -11,7 +11,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.lks.topx",
-      "buildNumber": "6.0.0",
+      "buildNumber": "7.0.0",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }
