@@ -365,31 +365,41 @@ export default function AccountRecordScreen() {
                         <Modal visible={isModalVisible} transparent={true} animationType="none">
                             <View style={styles.modalContainer}>
                                 <View style={styles.modalContent}>
-                                    <Text style={styles.modalTitle}>新增記錄</Text>
-                                    {Object.keys(newRecord).map((key, index) => (
-                                        key !== "showShare" && ( // ✅ Prevent showing "showShare" in inputs
-                                            <TextInput
-                                                key={index}
-                                                style={styles.input}
-                                                placeholder={key}
-                                                value={newRecord[key as keyof typeof newRecord]}
-                                                onChangeText={(text) => setNewRecord({ ...newRecord, [key]: text })}
-                                                multiline={true} 
-                                                numberOfLines={4}
-                                                textAlignVertical="top"
-                                                returnKeyType="default"
-                                            />
-                                        )
-                                    ))}
-                                    <Text style={styles.label}>是否顯示 分享注項?</Text>
-                                    <Picker
-                                        selectedValue={showShareButton}
-                                        onValueChange={(itemValue) => setShowShareButton(itemValue)}
-                                        style={styles.picker}
-                                    >
-                                        <Picker.Item label="否" value="No" />
-                                        <Picker.Item label="是" value="Yes" />
-                                    </Picker>
+                                    <ScrollView style={styles.modalScroll} contentContainerStyle={styles.modalScrollContent} showsVerticalScrollIndicator={true} keyboardShouldPersistTaps="handled">
+                                        <Text style={styles.modalTitle}>新增記錄</Text>
+                                        {Object.keys(newRecord).map((key, index) => (
+                                            key !== "showShare" && (
+                                                <TextInput
+                                                    key={index}
+                                                    style={styles.input}
+                                                    placeholder={key}
+                                                    value={newRecord[key as keyof typeof newRecord]}
+                                                    onChangeText={(text) => setNewRecord({ ...newRecord, [key]: text })}
+                                                    multiline={true}
+                                                    numberOfLines={4}
+                                                    textAlignVertical="top"
+                                                    returnKeyType="default"
+                                                />
+                                            )
+                                        ))}
+                                        <View style={styles.modalShareSection}>
+                                            <Text style={styles.label}>是否顯示 分享注項?</Text>
+                                            <View style={styles.shareOptionRow}>
+                                                <TouchableOpacity
+                                                    style={[styles.shareOptionBtn, showShareButton === 'No' && styles.shareOptionBtnSelected]}
+                                                    onPress={() => setShowShareButton('No')}
+                                                >
+                                                    <Text style={[styles.shareOptionText, showShareButton === 'No' && styles.shareOptionTextSelected]}>否</Text>
+                                                </TouchableOpacity>
+                                                <TouchableOpacity
+                                                    style={[styles.shareOptionBtn, showShareButton === 'Yes' && styles.shareOptionBtnSelected]}
+                                                    onPress={() => setShowShareButton('Yes')}
+                                                >
+                                                    <Text style={[styles.shareOptionText, showShareButton === 'Yes' && styles.shareOptionTextSelected]}>是</Text>
+                                                </TouchableOpacity>
+                                            </View>
+                                        </View>
+                                    </ScrollView>
                                     <View style={styles.modalButtons}>
                                         <TouchableOpacity style={styles.modalButton} onPress={() => setIsModalVisible(false)}>
                                             <Text style={styles.modalButtonText}>取消</Text>
@@ -476,10 +486,18 @@ const styles = StyleSheet.create({
         zIndex: 10,
     },
     modalContainer: { flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0, 0, 0, 0.5)' },
-    modalContent: { width: 300, backgroundColor: 'white', padding: 20, borderRadius: 10 },
+    modalContent: { width: 300, maxHeight: '85%', backgroundColor: 'white', borderRadius: 10, overflow: 'hidden' },
+    modalScroll: { maxHeight: '100%' },
+    modalScrollContent: { padding: 20, paddingBottom: 16 },
     modalTitle: { fontSize: 18, fontWeight: 'bold', marginBottom: 10 },
     input: { borderWidth: 1, borderColor: '#ddd', padding: 10, marginBottom: 10, borderRadius: 5 },
-    modalButtons: { flexDirection: 'row', justifyContent: 'space-between' },
+    modalShareSection: { marginBottom: 8 },
+    shareOptionRow: { flexDirection: 'row', gap: 12, marginTop: 4 },
+    shareOptionBtn: { flex: 1, paddingVertical: 12, paddingHorizontal: 16, borderRadius: 8, borderWidth: 1, borderColor: '#ddd', backgroundColor: '#fff', alignItems: 'center' },
+    shareOptionBtnSelected: { backgroundColor: '#002460', borderColor: '#002460' },
+    shareOptionText: { fontSize: 16, color: '#333' },
+    shareOptionTextSelected: { color: '#fff' },
+    modalButtons: { flexDirection: 'row', justifyContent: 'space-between', gap: 12, paddingHorizontal: 20, paddingTop: 12, paddingBottom: 20, borderTopWidth: 1, borderTopColor: '#eee' },
     modalButton: { padding: 10, backgroundColor: '#002460', borderRadius: 5 },
     modalButtonText: { color: 'white' },
     bottomTabs: {
