@@ -58,7 +58,6 @@ export default function DatePickerScreen() {
                     restrictMonthNavigation={true}
                     todayBackgroundColor="transparent"
                     todayTextStyle={styles.todayTextDark}
-                    todayStyle={styles.todayOutline}
                     selectedDayColor="#002460"
                     selectedDayTextColor="#002460"
                     selectedDayStyle={styles.selectedDayOutline}
@@ -67,7 +66,6 @@ export default function DatePickerScreen() {
                     selectedRangeEndStyle={styles.selectedRangeStartEnd}
                     selectedRangeStartTextStyle={styles.selectedRangeStartEndText}
                     selectedRangeEndTextStyle={styles.selectedRangeStartEndText}
-                    selectedRangeMiddleTextStyle={styles.selectedRangeMiddleText}
                     selectedRangeStyle={styles.selectedRangeMiddle}
                     minDate={new Date(2000, 0, 1)}
                     maxDate={today}
