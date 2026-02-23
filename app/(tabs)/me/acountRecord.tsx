@@ -329,8 +329,15 @@ export default function AccountRecordScreen() {
                         <ScrollView contentContainerStyle={{ paddingBottom: Math.max(300, TAB_BAR_HEIGHT + insets.bottom + 60) }} showsVerticalScrollIndicator={false}>
                             {acountDatas.map((acountdata, index) => (
                                 <View key={index} style={styles.tableContainer}>
-                                    {acountdata.map((row, rowIndex) => (
-                                    <View key={rowIndex} style={[styles.row, rowIndex === 0 && styles.headerRow]}>
+                                    {acountdata.map((row, rowIndex) => {
+                                    const isRefRow = rowIndex === 0 && row.key === "參考編號";
+                                    const RowWrapper = isRefRow ? TouchableOpacity : View;
+                                    const rowWrapperProps = isRefRow ? {
+                                        onPress: () => setIsModalVisible(true),
+                                        activeOpacity: 0.7,
+                                    } : {};
+                                    return (
+                                    <RowWrapper key={rowIndex} style={[styles.row, rowIndex === 0 && styles.headerRow]} {...rowWrapperProps}>
                                         {rowIndex === 0 ? (
                                             <Text style={styles.headerText}>{row.key}</Text>
                                         ) : (
@@ -355,8 +362,9 @@ export default function AccountRecordScreen() {
                                         ) : (
                                             <Text style={rowIndex === 0 ? styles.headerValueText : styles.cellValueText}>{row.value}</Text>
                                         )}
-                                    </View>
-                                    ))}
+                                    </RowWrapper>
+                                    );
+                                    })}
                                 </View>
                             ))}
                         </ScrollView>
