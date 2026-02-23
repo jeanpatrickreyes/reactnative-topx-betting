@@ -55,11 +55,12 @@ export default function DatePickerScreen() {
                     allowRangeSelection={true}
                     allowBackwardRangeSelect={true}
                     showDayStragglers={true}
+                    restrictMonthNavigation={true}
                     todayBackgroundColor="transparent"
                     todayTextStyle={styles.todayTextDark}
                     todayStyle={styles.todayOutline}
-                    selectedDayColor="#002D72"
-                    selectedDayTextColor="#002D72"
+                    selectedDayColor="#002460"
+                    selectedDayTextColor="#002460"
                     selectedDayStyle={styles.selectedDayOutline}
                     selectedDayTextStyle={styles.selectedDayTextDark}
                     selectedRangeStartStyle={styles.selectedRangeStartEnd}
@@ -118,8 +119,10 @@ export default function DatePickerScreen() {
                     <TouchableOpacity
                         style={styles.okButton}
                         onPress={() => {
-                            router.back(); // Navigate back to the previous screen
-                            router.setParams({ selectedDateRange: formattedDateRange }); // Pass the selected date range
+                            if (selectedStartDate && selectedEndDate) {
+                                router.back();
+                                router.setParams({ selectedDateRange: formattedDateRange });
+                            }
                         }}
                     >
                         <Text style={styles.okButtonText}>確定</Text>
@@ -133,21 +136,20 @@ export default function DatePickerScreen() {
 
 const styles = StyleSheet.create({
     container: { padding: 15, backgroundColor: 'white', height: '100%' },
-    monthYearHeaderText: { fontWeight: '500', fontSize: 22 },
-    topText: { marginBottom: 40 },
+    monthYearHeaderText: { fontFamily: 'NotoSansTC-Bold', fontWeight: '700', fontSize: 22 },
+    topText: { marginBottom: 36 },
     dateText: {
-        fontFamily: 'NotoSansTC-Medium',
+        fontFamily: 'NotoSansTC-Bold',
         lineHeight: 24,
         fontSize: 20,
-        fontWeight: 'bold',
-        color: '#002D72',
+        color: '#002460',
     },
-    introText: { fontFamily: 'NotoSansTC-Regular', lineHeight: 20, fontSize: 15, color: '#666', marginTop: 2 },
-    todayTextDark: { color: '#002D72' },
+    introText: { fontFamily: 'NotoSansTC-Medium', lineHeight: 20, fontSize: 15, color: '#666', marginTop: 2 },
+    todayTextDark: { color: '#002460' },
     todayOutline: {
         backgroundColor: 'transparent',
         borderWidth: 2,
-        borderColor: '#002D72',
+        borderColor: '#002460',
         borderRadius: 50,
         width: 40,
         height: 40,
@@ -157,16 +159,16 @@ const styles = StyleSheet.create({
     selectedDayOutline: {
         backgroundColor: 'transparent',
         borderWidth: 1,
-        borderColor: '#002D72',
+        borderColor: '#002460',
         borderRadius: 50,
         width: 40,
         height: 40,
         alignItems: 'center',
         justifyContent: 'center',
     },
-    selectedDayTextDark: { color: '#002D72' },
+    selectedDayTextDark: { color: '#002460' },
     selectedRangeStartEnd: {
-        backgroundColor: '#002D72',
+        backgroundColor: '#002460',
         width: 40,
         height: 40,
         borderRadius: 20,
@@ -200,9 +202,9 @@ const styles = StyleSheet.create({
     },
     horizonLine: { marginTop: -2, borderTopWidth: 1, borderTopColor: '#bbb' },
     buttons: { marginTop: -20, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
-    resetButton: { width: '30%', borderColor: '#002D72', borderWidth: 1, borderRadius: 21, marginTop: 32, padding: 12, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', height: 42 },
-    okButton: { width: '66%', backgroundColor: '#002D72', borderRadius: 20, marginTop: 32, padding: 12, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' },
-    resetButtonText: { fontFamily: 'NotoSansTC-Medium', lineHeight: 20, fontSize: 16, color: '#002D72', },
+    resetButton: { width: '30%', borderColor: '#002460', borderWidth: 1, borderRadius: 21, marginTop: 32, padding: 12, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', height: 42 },
+    okButton: { width: '66%', backgroundColor: '#002460', borderRadius: 20, marginTop: 32, padding: 12, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' },
+    resetButtonText: { fontFamily: 'NotoSansTC-Medium', lineHeight: 20, fontSize: 16, color: '#002460', },
     okButtonText: { fontFamily: 'NotoSansTC-Medium', lineHeight: 20, fontSize: 16, color: '#fff', },
     bottomTabs: {
         position: 'absolute',

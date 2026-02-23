@@ -185,18 +185,18 @@ export default function AccountRecordScreen() {
     };
 
     const [isTradeTypePickerVisible, setIsTradeTypePickerVisible] = useState(false);
-    const [selectedTradeType, setSelectedTradeType] = useState("");
+    const [selectedTradeType, setSelectedTradeType] = useState("所有");
 
     const [isTypePickerVisible, setIsTypePickerVisible] = useState(false);
-    const [selectedType, setSelectedType] = useState("");
+    const [selectedType, setSelectedType] = useState("所有");
 
 
     return (
         <View style={styles.entireContainer}>
             <View style={styles.topContainer}>
-                <Text style={styles.text}>時間: {currentTime ? formatCurrentTime(currentTime) : '-'}</Text>
-                <Text style={styles.text}>投注戶口號碼: {account || '-'}</Text>
-                <Text style={styles.text}>結餘: ${balance ? balance : '-'}</Text>
+                <Text style={styles.summaryText}>時間: {currentTime ? formatCurrentTime(currentTime) : '-'}</Text>
+                <Text style={styles.summaryText}>投注戶口號碼: {account || '-'}</Text>
+                <Text style={styles.summaryText}>結餘: ${balance ? balance : '-'}</Text>
             </View>
             { !isCompleteScreen &&
                 <LinearGradient
@@ -266,7 +266,7 @@ export default function AccountRecordScreen() {
                                     <Picker.Item label="六合彩" value="六合彩" color='#000' />
                                 </Picker>
                                 <TouchableOpacity
-                                    style={{backgroundColor: "#002D72", borderRadius: 20, height: 40, alignItems: 'center', justifyContent: 'center' }}
+                                    style={{backgroundColor: "#002460", borderRadius: 20, height: 40, alignItems: 'center', justifyContent: 'center' }}
                                     onPress={() => setIsTradeTypePickerVisible(false)}
                                 >
                                     <Text style={{ color: "white", fontSize: 16, fontFamily: 'NotoSansTC-Medium'  }}>完成</Text>
@@ -300,7 +300,7 @@ export default function AccountRecordScreen() {
                                     <Picker.Item label="已派彩 / 已退款 / 已扣扣之交易" value="已派彩 / 已退款 / 已扣扣之交易"  color='#000'  />
                                 </Picker>
                                 <TouchableOpacity
-                                    style={{backgroundColor: "#002D72", borderRadius: 21, height: 42, alignItems: 'center', justifyContent: 'center' }}
+                                    style={{backgroundColor: "#002460", borderRadius: 21, height: 42, alignItems: 'center', justifyContent: 'center' }}
                                     onPress={() => setIsTypePickerVisible(false)}
                                 >
                                     <Text style={{ color: "white", fontSize: 16, fontFamily: 'NotoSansTC-Medium'  }}>完成</Text>
@@ -313,7 +313,7 @@ export default function AccountRecordScreen() {
             ) : (
                 <>
                     <View style={styles.comDescriptionBox}>
-                        <Text style={styles.text}>搜尋時段: {dateRange.replace(' - ', ' 至 ')}</Text>
+                        <Text style={styles.summaryText}>搜尋時段: {dateRange.replace(' - ', ' 至 ')}</Text>
                     </View>
                     <LinearGradient
                         colors={["#ccc", "#eee"]}
@@ -331,7 +331,13 @@ export default function AccountRecordScreen() {
                                 <View key={index} style={styles.tableContainer}>
                                     {acountdata.map((row, rowIndex) => (
                                     <View key={rowIndex} style={[styles.row, rowIndex === 0 && styles.headerRow]}>
-                                        <Text style={rowIndex === 0 ? styles.headerText : styles.cellText}>{row.key}</Text>
+                                        {rowIndex === 0 ? (
+                                            <Text style={styles.headerText}>{row.key}</Text>
+                                        ) : (
+                                            <View style={styles.cellLabelWrapper}>
+                                                <Text style={styles.cellText}>{row.key}</Text>
+                                            </View>
+                                        )}
                                         {rowIndex === 0 && row.key === "參考編號" && row?.showShare === "Yes" ? (
                                             <View style={styles.headerRightGroup}>
                                                 <Text style={styles.headerValueText}>{row.value}</Text>
@@ -406,19 +412,20 @@ export default function AccountRecordScreen() {
 const styles = StyleSheet.create({
     entireContainer: {height: '100%', position: 'relative', backgroundColor: '#F2F2F2'},
     topContainer: { backgroundColor: '#fff', paddingHorizontal: 15, paddingTop: 11, paddingBottom: 11},
-    text: { fontFamily: 'NotoSansTC-Regular', lineHeight: 19, fontSize: 15, color: 'black' },
+    text: { fontFamily: 'NotoSansTC-Medium', lineHeight: 19, fontSize: 15, color: 'black' },
+    summaryText: { fontFamily: 'NotoSansTC-Bold', fontWeight: '700', lineHeight: 19, fontSize: 15, color: 'black' },
     destext: { fontFamily: 'NotoSansTC-Regular', fontSize: 15, color: 'black', marginTop:2 },
     bottomContainer: { backgroundColor: '#F2F2F2', paddingHorizontal: 12,  },
     dateBtns: { flexDirection: 'row', alignItems: 'center', marginTop: 17, marginBottom: 12, gap: 10 },
-    dateBtn: { borderColor: '#002D72', borderWidth: 1, borderRadius: 20, paddingHorizontal: 18, paddingTop: 4, paddingBottom:6, backgroundColor: 'white' },
-    dateBtnText: { fontFamily: 'NotoSansTC-Medium', lineHeight: 20, fontSize: 15, color: '#002D72' },
-    selectedDateBtn: { backgroundColor: '#002D72' },
+    dateBtn: { borderColor: '#002460', borderWidth: 1, borderRadius: 20, paddingHorizontal: 18, paddingTop: 4, paddingBottom:6, backgroundColor: 'white' },
+    dateBtnText: { fontFamily: 'NotoSansTC-Medium', lineHeight: 20, fontSize: 15, color: '#002460' },
+    selectedDateBtn: { backgroundColor: '#002460' },
     selectedDateBtnText: { color: 'white' },
     boxBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', backgroundColor: 'white', paddingTop: 11, paddingBottom: 11, paddingHorizontal: 15, borderColor: '#A0A0A0', borderWidth: 1.2, borderRadius: 5 },
     boxBtnLeftText: { fontFamily: 'NotoSansTC-Medium', lineHeight: 24, fontSize: 19, color: 'black' },
     boxBtnRightText: { fontFamily: 'NotoSansTC-bold', lineHeight: 24, fontWeight: 'bold', fontSize: 19, color: 'black' },
     horizonLine: { borderBottomWidth: 0.5, borderColor: "#A0A0A0", height: 26, marginTop: 3, marginBottom: 29 },
-    send: { width: '100%', backgroundColor: '#002D72', borderRadius: 20, marginTop: 28, height: 44, flexDirection: 'row', alignItems: 'center', justifyContent:'center'}, 
+    send: { width: '100%', backgroundColor: '#002460', borderRadius: 20, marginTop: 28, height: 44, flexDirection: 'row', alignItems: 'center', justifyContent:'center'}, 
     sendText: { fontFamily: 'NotoSansTC-Medium', lineHeight: 20, fontSize: 18, color: '#fff' },
     completeBtnText: { fontFamily: 'NotoSansTC-bold', fontSize: 14, color: 'white', fontWeight: 'bold', marginTop: 5 },
     backBtn: { flexDirection: 'row', alignItems: "center", },
@@ -427,19 +434,20 @@ const styles = StyleSheet.create({
     comContent: { backgroundColor: '#F2F2F2', paddingHorizontal: 12, paddingTop: 10, paddingBottom: 12 },
     tableContainer: { marginBottom: 10, backgroundColor: '#F2F2F2', borderRadius: 10, overflow: 'hidden', width: '100%', maxWidth: 420, alignSelf: 'center', borderWidth: 1, borderColor: '#ddd' },
     row: { flexDirection: 'row', alignItems: 'flex-start', paddingHorizontal: 15, paddingVertical: 5, backgroundColor: '#fff', borderBottomWidth: 1, borderBottomColor: '#ddd' },
-    headerRow: { backgroundColor: '#7A7A7A', minHeight: 44, paddingVertical: 10, paddingHorizontal: 15, alignItems: 'center' },
+    headerRow: { backgroundColor: '#888', minHeight: 44, paddingHorizontal: 15, alignItems: 'center' },
     headerText: { width: 130, fontFamily: 'NotoSansTC-Medium', fontWeight: '600', fontSize: 20, lineHeight: 24, color: '#fff' },
     headerValueText: { flex: 1, flexWrap: 'wrap', paddingLeft: 15, marginRight: 16, fontFamily: 'NotoSansTC-Medium', lineHeight: 24, fontSize: 20, color: '#fff' },
     headerRightGroup: { flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', paddingLeft: 15, gap: 8 },
-    cellText: { paddingVertical: 6, width: 130, borderRightColor: '#ddd', borderRightWidth: 1, fontFamily: 'NotoSansTC-Medium', lineHeight: 20, fontSize: 18, color: 'black' },
+    cellLabelWrapper: { width: 130, borderRightColor: '#ddd', borderRightWidth: 1, alignSelf: 'stretch', paddingVertical: 6 },
+    cellText: { fontFamily: 'NotoSansTC-Medium', lineHeight: 20, fontSize: 18, color: 'black' },
     cellValueText: { paddingVertical: 6, flex: 1, flexWrap: 'wrap', paddingLeft: 15, fontFamily: 'NotoSansTC-Medium', lineHeight: 20, fontSize: 18, color: 'black' },
     shareButton: {
         flexDirection: 'row',
         alignItems: 'center',
         backgroundColor: '#FFD700', // Gold/yellow color
         borderRadius: 20,
-        paddingHorizontal: 10,
-        paddingVertical: 5,
+        paddingHorizontal: 12,
+        paddingVertical: 6,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.2,
@@ -472,7 +480,7 @@ const styles = StyleSheet.create({
     modalTitle: { fontSize: 18, fontWeight: 'bold', marginBottom: 10 },
     input: { borderWidth: 1, borderColor: '#ddd', padding: 10, marginBottom: 10, borderRadius: 5 },
     modalButtons: { flexDirection: 'row', justifyContent: 'space-between' },
-    modalButton: { padding: 10, backgroundColor: '#002D72', borderRadius: 5 },
+    modalButton: { padding: 10, backgroundColor: '#002460', borderRadius: 5 },
     modalButtonText: { color: 'white' },
     bottomTabs: {
         position: 'absolute',

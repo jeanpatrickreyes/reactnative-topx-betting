@@ -72,7 +72,7 @@ export default function ProfileScreen() {
               resizeMode="cover" 
           >
             <LinearGradient
-              colors={['rgba(1,50,109,0.15)', 'transparent', 'rgba(1,50,109,0.08)']}
+              colors={['rgba(0,36,96,0.35)', 'rgba(0,36,96,0.12)', 'rgba(0,36,96,0.08)']}
               style={StyleSheet.absoluteFill}
             />
             <View style={styles.profileBalance}>
@@ -231,7 +231,7 @@ const styles = StyleSheet.create({
     borderRadius: 31.5,
   },
   quickLinkLabel: {
-    fontFamily: 'NotoSansTC-Regular',
+    fontFamily: 'NotoSansTC-Medium',
     fontSize: 19,
     color: '#333',
     marginTop: -3,
@@ -247,7 +247,7 @@ const styles = StyleSheet.create({
     marginTop: 13
   },
   myHkjc: {
-    fontFamily: 'NotoSansTC-Regular',
+    fontFamily: 'NotoSansTC-Medium',
     fontSize: 20,
     color: 'black',
     marginBottom: 3,
@@ -270,8 +270,8 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
     marginTop: 10,
     paddingLeft: 10,
-    paddingTop: 18,
-    paddingBottom: 8,
+    paddingTop: 12,
+    paddingBottom: 14,
     gap: 12
   },
   iconContainer: {
@@ -283,7 +283,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   myCouponsText: {
-    fontFamily: 'NotoSansTC-Regular',
+    fontFamily: 'NotoSansTC-Medium',
     fontSize: 19,
     color: '#333'
   },
@@ -311,7 +311,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   suggestionText: {
-    fontFamily: 'NotoSansTC-Regular',
+    fontFamily: 'NotoSansTC-Medium',
     fontSize: 18,
     color: '#000',
     marginLeft: 10,
@@ -324,17 +324,17 @@ const styles = StyleSheet.create({
     width: '100%', 
     borderWidth: 0,
     borderRadius: 40,
-    backgroundColor: '#002D72',
     marginTop: 50,
     paddingVertical: 13,
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent:'center'
+    justifyContent:'center',
+    backgroundColor: 'white',
   },
   logoutText: {
     fontFamily: 'NotoSansTC-Medium',
     lineHeight: 20,
     fontSize: 18,
-    color: '#fff',
+    color: '#002460',
   }
 });

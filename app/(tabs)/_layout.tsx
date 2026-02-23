@@ -16,7 +16,7 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        headerStyle: { backgroundColor: '#002D72', height: 110 },
+        headerStyle: { backgroundColor: '#002460', height: 110 },
         headerTintColor: 'white',
         headerTitleStyle: { fontSize: 20, fontFamily: 'NotoSansTC-Bold' },
         headerTitleAlign: 'center',
@@ -43,7 +43,7 @@ export default function TabLayout() {
       <Tabs.Screen name="discover" options={{ ...tabOptions('图标2.png', '馬上發現'), title: '馬上發現' }} />
       <Tabs.Screen name="betslip" options={{ ...tabOptions('图标3.png', '投注區'), title: '投注區' }} />
       <Tabs.Screen name="ewallet" options={{ ...tabOptions('图标4.png', '電子錢包'), title: '電子錢包' }} />
-      <Tabs.Screen name="more" options={{ ...tabOptionsMore('更多'), title: '更多' }} />
+      <Tabs.Screen name="more" options={{ ...tabOptions('图标5.png', '更多'), title: '更多' }} />
       <Tabs.Screen name="me" options={{ ...tabOptions('图标6.png', '我'), headerShown: false }} />
     </Tabs>
   );
@@ -75,7 +75,7 @@ const tabOptionsMore = (label: string) => ({
   tabBarIcon: ({ focused }: { focused: boolean }) => (
     <View style={styles.tabContainer}>
       <View style={[styles.iconWrapper, focused && styles.iconWrapperFocused]}>
-        <MaterialIcons name="more-vert" size={22} color={focused ? '#002D72' : '#333'} />
+        <MaterialIcons name="more-vert" size={22} color={focused ? '#002460' : '#333'} />
       </View>
       <Text style={[styles.tabText]}>{label}</Text>
     </View>
@@ -102,7 +102,6 @@ const styles = StyleSheet.create({
   tabText: {
     fontSize: 13,
     color: 'black',
-    fontFamily: 'NotoSansTC-Regular',
-    fontWeight: 'bold',
+    fontFamily: 'NotoSansTC-Medium',
   },
 });

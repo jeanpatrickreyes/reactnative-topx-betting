@@ -40,7 +40,7 @@ export default function CustomHeader({ title, hasBackButton = false, backIconOnl
 const styles = StyleSheet.create({
   container: {
     height: 125,
-    backgroundColor: "#002D72",
+    backgroundColor: "#002460",
     justifyContent: "flex-end",
     alignItems: "center",
     paddingBottom: 18,
