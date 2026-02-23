@@ -130,6 +130,7 @@ export default function AccountRecordScreen() {
     };
 
     const [isModalVisible, setIsModalVisible] = useState(false);
+    const [isTableScrolled, setIsTableScrolled] = useState(false);
     const [showShareButton, setShowShareButton] = useState("No");
     const [newRecord, setNewRecord] = useState({
         參考編號: '',
@@ -312,21 +313,26 @@ export default function AccountRecordScreen() {
                 </View>
             ) : (
                 <>
-                    <View style={styles.comDescriptionBox}>
+                    <View style={[styles.comDescriptionBox, isTableScrolled && styles.comDescriptionBoxScrolled]}>
                         <Text style={styles.summaryText}>搜尋時段: {dateRange.replace(' - ', ' 至 ')}</Text>
                     </View>
                     <LinearGradient
                         colors={["#ccc", "#eee"]}
                         start={{ x: 0.5, y: 0 }}
                         end={{ x: 0.5, y: 1 }}
-                        style={styles.gradientBox}
+                        style={[styles.gradientBox, { height: isTableScrolled ? 0 : 5 }]}
                     />
 
                     <TouchableOpacity style={styles.addButton} onPress={() => setIsModalVisible(true)}>
                         <MaterialIcons name="add" size={20} color="#fff" />
                     </TouchableOpacity>
                     <View style={styles.comContent}>
-                        <ScrollView contentContainerStyle={{ paddingBottom: Math.max(300, TAB_BAR_HEIGHT + insets.bottom + 60) }} showsVerticalScrollIndicator={false}>
+                        <ScrollView
+                            onScroll={(e) => { const y = e.nativeEvent.contentOffset.y; setIsTableScrolled(y > 8); }}
+                            scrollEventThrottle={16}
+                            contentContainerStyle={{ paddingTop: 0, paddingBottom: Math.max(320, TAB_BAR_HEIGHT + insets.bottom + 100) }}
+                            showsVerticalScrollIndicator={false}
+                        >
                             {acountDatas.map((acountdata, index) => (
                                 <View key={index} style={styles.tableContainer}>
                                     {acountdata.map((row, rowIndex) => {
@@ -448,7 +454,8 @@ const styles = StyleSheet.create({
     completeBtnText: { fontFamily: 'NotoSansTC-bold', fontSize: 14, color: 'white', fontWeight: 'bold', marginTop: 5 },
     backBtn: { flexDirection: 'row', alignItems: "center", },
     backText: { color: 'white', fontWeight: 'bold', marginTop: 5, fontSize: 16 },
-    comDescriptionBox: { backgroundColor: '#F2F2F2', paddingHorizontal: 15, paddingVertical: 8 },
+    comDescriptionBox: { backgroundColor: '#F2F2F2', paddingHorizontal: 15, paddingTop: 8, paddingBottom: 8 },
+    comDescriptionBoxScrolled: { paddingBottom: 0 },
     comContent: { backgroundColor: '#F2F2F2', paddingHorizontal: 12, paddingTop: 10, paddingBottom: 12 },
     tableContainer: { marginBottom: 10, backgroundColor: '#F2F2F2', borderRadius: 10, overflow: 'hidden', width: '100%', maxWidth: 420, alignSelf: 'center', borderWidth: 1, borderColor: '#ddd' },
     row: { flexDirection: 'row', alignItems: 'flex-start', paddingHorizontal: 15, paddingVertical: 5, backgroundColor: '#fff', borderBottomWidth: 1, borderBottomColor: '#ddd' },
@@ -544,8 +551,8 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     gradientBox: {
-        height: 5, // ✅ Set height to 5px
-        width: "100%", // ✅ Full width
+        height: 5,
+        width: "100%",
     },
     picker: { height: 50, width: "100%", marginBottom: 10 },
     label: { fontSize: 16, fontWeight: "bold", marginTop: 10, marginBottom: 5 },
