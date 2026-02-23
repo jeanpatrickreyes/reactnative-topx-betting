@@ -43,7 +43,6 @@ export default function DatePickerScreen() {
 
     return (
         <>
-            <View style={styles.headerTop}></View>
             <View style={styles.container}>
                 <StatusBar style="auto" />
                 <View style={styles.topText}>
@@ -90,6 +89,9 @@ export default function DatePickerScreen() {
                         '7月', '8月', '9月', '10月', '11月', '12月'
                     ]}
                     dayLabelsWrapper={styles.dayLabelsWrapper}
+                    customDayHeaderStyles={() => ({ textStyle: styles.dayLabelsText })}
+                    monthTitleStyle={styles.monthYearHeaderText}
+                    yearTitleStyle={styles.monthYearHeaderText}
                     onDateChange={(date: Date, type: string) => {
                         if (type === 'START_DATE') {
                             setSelectedStartDate(date);
@@ -130,8 +132,8 @@ export default function DatePickerScreen() {
 }
 
 const styles = StyleSheet.create({
-    headerTop: { height: 8, backgroundColor: '#002D72' },
     container: { padding: 15, backgroundColor: 'white', height: '100%' },
+    monthYearHeaderText: { fontWeight: '500', fontSize: 22 },
     topText: { marginBottom: 40 },
     dateText: {
         fontFamily: 'NotoSansTC-Medium',
@@ -140,7 +142,7 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         color: '#002D72',
     },
-    introText: { fontFamily: 'NotoSansTC-Regular', lineHeight: 20, fontSize: 14, color: '#666', marginTop: 5 },
+    introText: { fontFamily: 'NotoSansTC-Regular', lineHeight: 20, fontSize: 15, color: '#666', marginTop: 2 },
     todayTextDark: { color: '#002D72' },
     todayOutline: {
         backgroundColor: 'transparent',
@@ -185,16 +187,18 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     selectedRangeMiddleText: { color: '#5B8FB9' },
-    calendarWrapper: { marginTop: 8 },
+    calendarWrapper: { marginTop: -8 },
+    dayLabelsText: { fontSize: 22, color: '#000' },
     dayLabelsWrapper: {
         width: '100%',
-        marginBottom: 24,
+        marginTop: 10,
+        marginBottom: 18,
         paddingHorizontal: 0,
         alignSelf: 'center',
         justifyContent: 'space-around',
         borderTopWidth: 0,
     },
-    horizonLine: { marginTop: 20, borderTopWidth: 1, borderTopColor: '#bbb' },
+    horizonLine: { marginTop: -2, borderTopWidth: 1, borderTopColor: '#bbb' },
     buttons: { marginTop: -20, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
     resetButton: { width: '30%', borderColor: '#002D72', borderWidth: 1, borderRadius: 21, marginTop: 32, padding: 12, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', height: 42 },
     okButton: { width: '66%', backgroundColor: '#002D72', borderRadius: 20, marginTop: 32, padding: 12, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' },
