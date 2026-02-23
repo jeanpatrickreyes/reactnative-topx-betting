@@ -130,6 +130,7 @@ export default function AccountRecordScreen() {
     };
 
     const [isModalVisible, setIsModalVisible] = useState(false);
+    const [editingRecordIndex, setEditingRecordIndex] = useState<number | null>(null);
     const [isTableScrolled, setIsTableScrolled] = useState(false);
     const [showShareButton, setShowShareButton] = useState("No");
     const [newRecord, setNewRecord] = useState({
@@ -141,6 +142,39 @@ export default function AccountRecordScreen() {
         存入: '',
         showShare: "No",
     });
+
+    const openEditModal = (recordIndex: number) => {
+        const acountdata = acountDatas[recordIndex];
+        const recordMap: Record<string, string> = {};
+        acountdata.forEach((row) => {
+            if (row.key === '參考編號') recordMap['參考編號'] = row.value;
+            else if (row.key === '日期 / 時間') recordMap['日期時間'] = row.value;
+            else if (row.key === '投注類別') recordMap['投注類別'] = row.value;
+            else if (row.key === '細節') recordMap['細節'] = row.value;
+            else if (row.key === '支出') recordMap['支出'] = row.value;
+            else if (row.key === '存入') recordMap['存入'] = row.value;
+        });
+        const refRow = acountdata.find((r) => r.key === '參考編號');
+        setNewRecord({
+            參考編號: recordMap['參考編號'] ?? '',
+            日期時間: recordMap['日期時間'] ?? '',
+            投注類別: recordMap['投注類別'] ?? '',
+            細節: recordMap['細節'] ?? '',
+            支出: recordMap['支出'] ?? '',
+            存入: recordMap['存入'] ?? '',
+            showShare: (refRow as any)?.showShare === 'Yes' ? 'Yes' : 'No',
+        });
+        setShowShareButton((refRow as any)?.showShare === 'Yes' ? 'Yes' : 'No');
+        setEditingRecordIndex(recordIndex);
+        setIsModalVisible(true);
+    };
+
+    const openAddModal = () => {
+        setNewRecord({ 參考編號: '', 日期時間: '', 投注類別: '', 細節: '', 支出: '', 存入: '', showShare: "No" });
+        setShowShareButton("No");
+        setEditingRecordIndex(null);
+        setIsModalVisible(true);
+    };
 
     const [acountDatas, setAcountDatas] = useState<AccountRow[][]>([
         [
@@ -169,8 +203,8 @@ export default function AccountRecordScreen() {
         ],
     ]);
 
-    const handleAddRecord = () => {
-        const newEntry: AccountRow[] = [
+    const handleSaveRecord = () => {
+        const updatedEntry: AccountRow[] = [
             { key: '參考編號', value: newRecord.參考編號 || '-', showShare: showShareButton },
             { key: '日期 / 時間', value: newRecord.日期時間 || '-' },
             { key: '投注類別', value: newRecord.投注類別 || '-' },
@@ -179,10 +213,27 @@ export default function AccountRecordScreen() {
             { key: '存入', value: newRecord.存入 || '-' },
         ];
 
-        setAcountDatas([...acountDatas, newEntry]);
-        setIsModalVisible(false); // Close modal
-        setNewRecord({ 參考編號: '', 日期時間: '', 投注類別: '', 細節: '', 支出: '', 存入: '', showShare: "No" }); // Reset form
+        if (editingRecordIndex !== null) {
+            const next = [...acountDatas];
+            next[editingRecordIndex] = updatedEntry;
+            setAcountDatas(next);
+        } else {
+            setAcountDatas([...acountDatas, updatedEntry]);
+        }
+        setIsModalVisible(false);
+        setNewRecord({ 參考編號: '', 日期時間: '', 投注類別: '', 細節: '', 支出: '', 存入: '', showShare: "No" });
         setShowShareButton("No");
+        setEditingRecordIndex(null);
+    };
+
+    const handleDeleteRecord = () => {
+        if (editingRecordIndex === null) return;
+        const next = acountDatas.filter((_, i) => i !== editingRecordIndex);
+        setAcountDatas(next);
+        setIsModalVisible(false);
+        setNewRecord({ 參考編號: '', 日期時間: '', 投注類別: '', 細節: '', 支出: '', 存入: '', showShare: "No" });
+        setShowShareButton("No");
+        setEditingRecordIndex(null);
     };
 
     const [isTradeTypePickerVisible, setIsTradeTypePickerVisible] = useState(false);
@@ -323,7 +374,7 @@ export default function AccountRecordScreen() {
                         style={[styles.gradientBox, { height: isTableScrolled ? 0 : 5 }]}
                     />
 
-                    <TouchableOpacity style={styles.addButton} onPress={() => setIsModalVisible(true)}>
+                    <TouchableOpacity style={styles.addButton} onPress={openAddModal}>
                         <MaterialIcons name="add" size={20} color="#fff" />
                     </TouchableOpacity>
                     <View style={styles.comContent}>
@@ -339,7 +390,7 @@ export default function AccountRecordScreen() {
                                     const isRefRow = rowIndex === 0 && row.key === "參考編號";
                                     const RowWrapper = isRefRow ? TouchableOpacity : View;
                                     const rowWrapperProps = isRefRow ? {
-                                        onPress: () => setIsModalVisible(true),
+                                        onPress: () => openEditModal(index),
                                         activeOpacity: 0.7,
                                     } : {};
                                     return (
@@ -380,7 +431,7 @@ export default function AccountRecordScreen() {
                             <View style={styles.modalContainer}>
                                 <View style={styles.modalContent}>
                                     <ScrollView style={styles.modalScroll} contentContainerStyle={styles.modalScrollContent} showsVerticalScrollIndicator={true} keyboardShouldPersistTaps="handled">
-                                        <Text style={styles.modalTitle}>新增記錄</Text>
+                                        <Text style={styles.modalTitle}>{editingRecordIndex !== null ? '編輯記錄' : '新增記錄'}</Text>
                                         {Object.keys(newRecord).map((key, index) => (
                                             key !== "showShare" && (
                                                 <TextInput
@@ -416,10 +467,15 @@ export default function AccountRecordScreen() {
                                         </View>
                                     </ScrollView>
                                     <View style={styles.modalButtons}>
-                                        <TouchableOpacity style={styles.modalButton} onPress={() => setIsModalVisible(false)}>
+                                        <TouchableOpacity style={styles.modalButton} onPress={() => { setIsModalVisible(false); setEditingRecordIndex(null); }}>
                                             <Text style={styles.modalButtonText}>取消</Text>
                                         </TouchableOpacity>
-                                        <TouchableOpacity style={styles.modalButton} onPress={handleAddRecord}>
+                                        {editingRecordIndex !== null && (
+                                            <TouchableOpacity style={styles.modalDeleteButton} onPress={handleDeleteRecord}>
+                                                <Text style={styles.modalDeleteButtonText}>刪除</Text>
+                                            </TouchableOpacity>
+                                        )}
+                                        <TouchableOpacity style={styles.modalButton} onPress={handleSaveRecord}>
                                             <Text style={styles.modalButtonText}>確定</Text>
                                         </TouchableOpacity>
                                     </View>
@@ -514,8 +570,10 @@ const styles = StyleSheet.create({
     shareOptionText: { fontSize: 16, color: '#333' },
     shareOptionTextSelected: { color: '#fff' },
     modalButtons: { flexDirection: 'row', justifyContent: 'space-between', gap: 12, paddingHorizontal: 20, paddingTop: 12, paddingBottom: 20, borderTopWidth: 1, borderTopColor: '#eee' },
-    modalButton: { padding: 10, backgroundColor: '#002460', borderRadius: 5 },
+    modalButton: { flex: 1, padding: 10, backgroundColor: '#002460', borderRadius: 5, alignItems: 'center' },
     modalButtonText: { color: 'white' },
+    modalDeleteButton: { flex: 1, padding: 10, backgroundColor: '#E53935', borderRadius: 5, alignItems: 'center' },
+    modalDeleteButtonText: { color: 'white' },
     bottomTabs: {
         position: 'absolute',
         bottom: 0,
