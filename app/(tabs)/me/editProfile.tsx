@@ -53,7 +53,7 @@ export default function EditProfileScreen() {
           placeholder="輸入您的餘額"
           value={balance}
           onChangeText={setBalance}
-          keyboardType="numeric"
+          keyboardType="default"
         />
 
         <Text style={styles.label}>投注戶口號碼</Text>
@@ -62,7 +62,7 @@ export default function EditProfileScreen() {
           placeholder="輸入您的帳戶"
           value={account}
           onChangeText={setAccount}
-          keyboardType="number-pad"
+          keyboardType="default"
         />
         <TouchableOpacity onPress={handleSubmit} style={styles.submit}>
           <Text style={styles.buttonText}>提交</Text>
