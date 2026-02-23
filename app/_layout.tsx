@@ -26,13 +26,15 @@ export default function RootLayout() {
     'NotoSansTC-Medium': require('../assets/fonts/NotoSansTC-Medium.ttf'),
   });
 
+  const allFontsLoaded = loaded && fontsLoaded;
+
   useEffect(() => {
-    if (loaded) {
+    if (allFontsLoaded) {
       SplashScreen.hideAsync();
     }
-  }, [loaded]);
+  }, [allFontsLoaded]);
 
-  if (!loaded) {
+  if (!allFontsLoaded) {
     return null;
   }
 
