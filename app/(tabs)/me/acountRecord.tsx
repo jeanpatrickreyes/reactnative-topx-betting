@@ -387,6 +387,7 @@ export default function AccountRecordScreen() {
                                                     key={index}
                                                     style={styles.input}
                                                     placeholder={key}
+                                                    placeholderTextColor="#888"
                                                     value={newRecord[key as keyof typeof newRecord]}
                                                     onChangeText={(text) => setNewRecord({ ...newRecord, [key]: text })}
                                                     multiline={true}
