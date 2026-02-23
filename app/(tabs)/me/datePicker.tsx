@@ -144,7 +144,7 @@ const styles = StyleSheet.create({
         fontSize: 20,
         color: '#002460',
     },
-    introText: { fontFamily: 'NotoSansTC-Medium', lineHeight: 20, fontSize: 15, color: '#666', marginTop: 2 },
+    introText: { fontFamily: 'NotoSansTC-Medium', lineHeight: 20, fontSize: 15, color: '#444', marginTop: 2 },
     todayTextDark: { color: '#002460' },
     todayOutline: {
         backgroundColor: 'transparent',

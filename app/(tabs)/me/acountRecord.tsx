@@ -194,9 +194,9 @@ export default function AccountRecordScreen() {
     return (
         <View style={styles.entireContainer}>
             <View style={styles.topContainer}>
-                <Text style={styles.summaryText}>時間: {currentTime ? formatCurrentTime(currentTime) : '-'}</Text>
-                <Text style={styles.summaryText}>投注戶口號碼: {account || '-'}</Text>
-                <Text style={styles.summaryText}>結餘: ${balance ? balance : '-'}</Text>
+                <Text style={styles.text}>時間: {currentTime ? formatCurrentTime(currentTime) : '-'}</Text>
+                <Text style={styles.text}>投注戶口號碼: {account || '-'}</Text>
+                <Text style={styles.text}>結餘: ${balance ? balance : '-'}</Text>
             </View>
             { !isCompleteScreen &&
                 <LinearGradient
