@@ -118,8 +118,7 @@ export default function AccountRecordScreen() {
 
     useEffect(() => {
         if (selectedDateRange) {
-            const currentDate = new Date();
-            setDateRange(`${selectedDateRange} - ${formatDate(currentDate)}`);// Update date range when returning from DatePicker
+            setDateRange(selectedDateRange); // Use the range from DatePicker as-is (e.g. "09/02/2026 - 12/02/2026")
             setSelectedButton(null); // Reset selected button to remove styling
         }
     }, [selectedDateRange]);
@@ -494,7 +493,7 @@ const styles = StyleSheet.create({
     entireContainer: {height: '100%', position: 'relative', backgroundColor: '#F2F2F2'},
     topContainer: { backgroundColor: '#fff', paddingHorizontal: 15, paddingTop: 11, paddingBottom: 11},
     text: { fontFamily: 'NotoSansTC-Medium', lineHeight: 19, fontSize: 15, color: 'black' },
-    summaryText: { fontFamily: 'NotoSansTC-Bold', fontWeight: '700', lineHeight: 19, fontSize: 15, color: 'black' },
+    summaryText: { fontFamily: 'NotoSansTC-Medium', fontWeight: '600', lineHeight: 19, fontSize: 15, color: 'black' },
     destext: { fontFamily: 'NotoSansTC-Regular', fontSize: 15, color: 'black', marginTop:2 },
     bottomContainer: { backgroundColor: '#F2F2F2', paddingHorizontal: 12,  },
     dateBtns: { flexDirection: 'row', alignItems: 'center', marginTop: 17, marginBottom: 12, gap: 10 },
@@ -515,12 +514,12 @@ const styles = StyleSheet.create({
     comDescriptionBoxScrolled: { paddingBottom: 0 },
     comContent: { backgroundColor: '#F2F2F2', paddingHorizontal: 12, paddingTop: 10, paddingBottom: 12 },
     tableContainer: { marginBottom: 10, backgroundColor: '#F2F2F2', borderRadius: 10, overflow: 'hidden', width: '100%', maxWidth: 420, alignSelf: 'center', borderWidth: 1, borderColor: '#ddd' },
-    row: { flexDirection: 'row', alignItems: 'flex-start', paddingHorizontal: 15, paddingVertical: 5, backgroundColor: '#fff', borderBottomWidth: 1, borderBottomColor: '#ddd' },
+    row: { flexDirection: 'row', alignItems: 'flex-start', paddingHorizontal: 15, paddingVertical: 5, backgroundColor: '#fff', borderBottomWidth: 1, borderBottomColor: '#aaa' },
     headerRow: { backgroundColor: '#888', minHeight: 44, paddingHorizontal: 15, alignItems: 'center' },
     headerText: { width: 130, fontFamily: 'NotoSansTC-Medium', fontWeight: '600', fontSize: 20, lineHeight: 24, color: '#fff' },
     headerValueText: { flex: 1, flexWrap: 'wrap', paddingLeft: 15, marginRight: 16, fontFamily: 'NotoSansTC-Medium', lineHeight: 24, fontSize: 20, color: '#fff' },
     headerRightGroup: { flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', paddingLeft: 15, gap: 8 },
-    cellLabelWrapper: { width: 130, borderRightColor: '#ddd', borderRightWidth: 1, alignSelf: 'stretch', paddingVertical: 6 },
+    cellLabelWrapper: { width: 130, borderRightColor: '#aaa', borderRightWidth: 1, alignSelf: 'stretch', paddingVertical: 6 },
     cellText: { fontFamily: 'NotoSansTC-Medium', lineHeight: 20, fontSize: 18, color: 'black' },
     cellValueText: { paddingVertical: 6, flex: 1, flexWrap: 'wrap', paddingLeft: 15, fontFamily: 'NotoSansTC-Medium', lineHeight: 20, fontSize: 18, color: 'black' },
     shareButton: {
@@ -529,7 +528,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFD700', // Gold/yellow color
         borderRadius: 20,
         paddingHorizontal: 12,
-        paddingVertical: 6,
+        paddingVertical: 2,
         shadowColor: '#000',
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.2,
@@ -537,14 +536,16 @@ const styles = StyleSheet.create({
         elevation: 3, // For Android shadow
     },
     shareIcon: {
-        marginRight: 5,
+        marginRight: 8,
     },
     shareText: {
         fontFamily: 'NotoSansTC-Medium',
-        fontSize: 18,
+        fontSize: 16,
         color: 'black',
         fontWeight: '600',
-        includeFontPadding: false
+        includeFontPadding: false,
+        marginBottom: 4,
+        marginLeft: 4,
     },
     addButton: {
         position: 'absolute',
