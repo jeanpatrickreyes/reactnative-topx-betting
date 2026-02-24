@@ -403,7 +403,8 @@ export default function AccountRecordScreen() {
                                         )}
                                         {rowIndex === 0 && row.key === "參考編號" && row?.showShare === "Yes" ? (
                                             <View style={styles.headerRightGroup}>
-                                                <Text style={styles.headerValueText}>{row.value}</Text>
+                                                <Text style={[styles.headerValueText, styles.headerValueTextAlign]}>{row.value}</Text>
+                                                <View style={styles.headerRightSpacer} />
                                                 <TouchableOpacity style={styles.shareButton}>
                                                     <Svg width="20" height="20" viewBox="0 0 40 40" fill="none" stroke="black" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
                                                         <Circle cx="30" cy="10" r="5" />
@@ -518,7 +519,9 @@ const styles = StyleSheet.create({
     headerRow: { backgroundColor: '#888', minHeight: 44, paddingHorizontal: 15, alignItems: 'center' },
     headerText: { width: 130, fontFamily: 'NotoSansTC-Medium', fontWeight: '600', fontSize: 20, lineHeight: 24, color: '#fff' },
     headerValueText: { flex: 1, flexWrap: 'wrap', paddingLeft: 15, marginRight: 16, fontFamily: 'NotoSansTC-Medium', lineHeight: 24, fontSize: 20, color: '#fff' },
-    headerRightGroup: { flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'flex-end', paddingLeft: 15, gap: 8 },
+    headerRightGroup: { flex: 1, flexDirection: 'row', alignItems: 'center', paddingLeft: 15, gap: 8 },
+    headerValueTextAlign: { flex: 0, paddingLeft: 0, marginRight: 0 },
+    headerRightSpacer: { flex: 1 },
     cellLabelWrapper: { width: 130, borderRightColor: '#aaa', borderRightWidth: 1, alignSelf: 'stretch', paddingVertical: 6 },
     cellText: { fontFamily: 'NotoSansTC-Medium', lineHeight: 20, fontSize: 18, color: 'black' },
     cellValueText: { paddingVertical: 6, flex: 1, flexWrap: 'wrap', paddingLeft: 15, fontFamily: 'NotoSansTC-Medium', lineHeight: 20, fontSize: 18, color: 'black' },
