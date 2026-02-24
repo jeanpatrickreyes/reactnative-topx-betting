@@ -1,11 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { View, Text, StyleSheet, TouchableOpacity, ScrollView, Modal, TextInput, Image } from 'react-native';
 import { useFonts } from 'expo-font';
 import { useRoute, RouteProp, useNavigation } from '@react-navigation/native';
 import { useRouter, useLocalSearchParams } from 'expo-router';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { MaterialIcons } from '@expo/vector-icons';
-import Svg, { Circle, Line } from 'react-native-svg';
 import { LinearGradient } from "expo-linear-gradient";
 import { Picker } from '@react-native-picker/picker';
 import CustomHeader from '@/components/CustomHeader';
@@ -123,6 +122,10 @@ export default function AccountRecordScreen() {
         }
     }, [selectedDateRange]);
 
+    useEffect(() => () => {
+        if (scrollbarHideTimerRef.current) clearTimeout(scrollbarHideTimerRef.current);
+    }, []);
+
     const handlePress = (button: string) => {
         setSelectedButton(button);
         updateDateRange(button);
@@ -131,6 +134,10 @@ export default function AccountRecordScreen() {
     const [isModalVisible, setIsModalVisible] = useState(false);
     const [editingRecordIndex, setEditingRecordIndex] = useState<number | null>(null);
     const [isTableScrolled, setIsTableScrolled] = useState(false);
+    const [scrollY, setScrollY] = useState(0);
+    const [scrollLayout, setScrollLayout] = useState({ contentHeight: 0, layoutHeight: 0 });
+    const [showScrollbar, setShowScrollbar] = useState(false);
+    const scrollbarHideTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
     const [showShareButton, setShowShareButton] = useState("No");
     const [newRecord, setNewRecord] = useState({
         參考編號: '',
@@ -377,13 +384,38 @@ export default function AccountRecordScreen() {
                         <MaterialIcons name="add" size={20} color="#fff" />
                     </TouchableOpacity>
                     <View style={styles.comContent}>
-                        <ScrollView
-                            onScroll={(e) => { const y = e.nativeEvent.contentOffset.y; setIsTableScrolled(y > 8); }}
-                            scrollEventThrottle={16}
-                            contentContainerStyle={{ paddingTop: 0, paddingBottom: Math.max(320, TAB_BAR_HEIGHT + insets.bottom + 100) }}
-                            showsVerticalScrollIndicator={false}
-                        >
-                            {acountDatas.map((acountdata, index) => (
+                        <View style={styles.scrollWrapper}>
+                            <ScrollView
+                                onScroll={(e) => {
+                                    const { contentOffset, contentSize, layoutMeasurement } = e.nativeEvent;
+                                    setScrollY(contentOffset.y);
+                                    setScrollLayout(prev => ({ ...prev, contentHeight: contentSize.height, layoutHeight: layoutMeasurement.height }));
+                                    setIsTableScrolled(contentOffset.y > 8);
+                                }}
+                                onScrollBeginDrag={() => {
+                                    if (scrollbarHideTimerRef.current) {
+                                        clearTimeout(scrollbarHideTimerRef.current);
+                                        scrollbarHideTimerRef.current = null;
+                                    }
+                                    setShowScrollbar(true);
+                                }}
+                                onScrollEndDrag={() => {
+                                    scrollbarHideTimerRef.current = setTimeout(() => setShowScrollbar(false), 800);
+                                }}
+                                onMomentumScrollEnd={() => {
+                                    if (scrollbarHideTimerRef.current) clearTimeout(scrollbarHideTimerRef.current);
+                                    scrollbarHideTimerRef.current = setTimeout(() => setShowScrollbar(false), 800);
+                                }}
+                                onContentSizeChange={(_w, h) => setScrollLayout(prev => ({ ...prev, contentHeight: h }))}
+                                onLayout={(e) => {
+                                    const layout = e.nativeEvent?.layout;
+                                    if (layout) setScrollLayout(prev => ({ ...prev, layoutHeight: layout.height }));
+                                }}
+                                scrollEventThrottle={16}
+                                contentContainerStyle={{ paddingTop: 0, paddingBottom: TAB_BAR_HEIGHT + insets.bottom + 100 }}
+                                showsVerticalScrollIndicator={false}
+                            >
+                                {acountDatas.map((acountdata, index) => (
                                 <View key={index} style={styles.tableContainer}>
                                     {acountdata.map((row, rowIndex) => {
                                     const isRefRow = rowIndex === 0 && row.key === "參考編號";
@@ -405,15 +437,8 @@ export default function AccountRecordScreen() {
                                             <View style={styles.headerRightGroup}>
                                                 <Text style={[styles.headerValueText, styles.headerValueTextAlign]}>{row.value}</Text>
                                                 <View style={styles.headerRightSpacer} />
-                                                <TouchableOpacity style={styles.shareButton}>
-                                                    <Svg width="20" height="20" viewBox="0 0 40 40" fill="none" stroke="black" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
-                                                        <Circle cx="30" cy="10" r="5" />
-                                                        <Circle cx="10" cy="20" r="5" />
-                                                        <Circle cx="30" cy="30" r="5" />
-                                                        <Line x1="25" y1="10" x2="15" y2="20" />
-                                                        <Line x1="25" y1="30" x2="15" y2="20" />
-                                                    </Svg>
-                                                    <Text style={styles.shareText}>分享注項</Text>
+                                                <TouchableOpacity style={styles.shareButton} activeOpacity={0.8}>
+                                                    <Image source={require('../../../assets/images/yellow-button.png')} style={styles.shareButtonImage} resizeMode="contain" />
                                                 </TouchableOpacity>
                                             </View>
                                         ) : (
@@ -424,9 +449,25 @@ export default function AccountRecordScreen() {
                                     })}
                                 </View>
                             ))}
-                        </ScrollView>
-                        
-                        
+                            </ScrollView>
+                            {showScrollbar && scrollLayout.contentHeight > scrollLayout.layoutHeight && scrollLayout.layoutHeight > 0 && (
+                                <View style={styles.scrollbarTrack}>
+                                    <View
+                                        style={[
+                                            styles.scrollbarThumb,
+                                            {
+                                                height: Math.max(24, (scrollLayout.layoutHeight / scrollLayout.contentHeight) * scrollLayout.layoutHeight),
+                                                top: scrollLayout.contentHeight <= scrollLayout.layoutHeight
+                                                    ? 0
+                                                    : (scrollY / (scrollLayout.contentHeight - scrollLayout.layoutHeight)) *
+                                                      (scrollLayout.layoutHeight - Math.max(24, (scrollLayout.layoutHeight / scrollLayout.contentHeight) * scrollLayout.layoutHeight)),
+                                            },
+                                        ]}
+                                    />
+                                </View>
+                            )}
+                        </View>
+
                         <Modal visible={isModalVisible} transparent={true} animationType="none">
                             <View style={styles.modalContainer}>
                                 <View style={styles.modalContent}>
@@ -492,17 +533,17 @@ export default function AccountRecordScreen() {
 
 const styles = StyleSheet.create({
     entireContainer: {height: '100%', position: 'relative', backgroundColor: '#F2F2F2'},
-    topContainer: { backgroundColor: '#fff', paddingHorizontal: 15, paddingTop: 11, paddingBottom: 11},
+    topContainer: { backgroundColor: '#fff', paddingHorizontal: 11, paddingTop: 11, paddingBottom: 11},
     text: { fontFamily: 'NotoSansTC-Medium', lineHeight: 19, fontSize: 15, color: 'black' },
     summaryText: { fontFamily: 'NotoSansTC-Medium', fontWeight: '600', lineHeight: 19, fontSize: 15, color: 'black' },
     destext: { fontFamily: 'NotoSansTC-Regular', fontSize: 15, color: 'black', marginTop:2 },
-    bottomContainer: { backgroundColor: '#F2F2F2', paddingHorizontal: 12,  },
+    bottomContainer: { backgroundColor: '#F2F2F2', paddingHorizontal: 9,  },
     dateBtns: { flexDirection: 'row', alignItems: 'center', marginTop: 17, marginBottom: 12, gap: 10 },
     dateBtn: { borderColor: '#002460', borderWidth: 1, borderRadius: 20, paddingHorizontal: 18, paddingTop: 4, paddingBottom:6, backgroundColor: 'white' },
     dateBtnText: { fontFamily: 'NotoSansTC-Medium', lineHeight: 20, fontSize: 15, color: '#002460' },
     selectedDateBtn: { backgroundColor: '#002460' },
     selectedDateBtnText: { color: 'white' },
-    boxBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', backgroundColor: 'white', paddingTop: 11, paddingBottom: 11, paddingHorizontal: 15, borderColor: '#A0A0A0', borderWidth: 1.2, borderRadius: 5 },
+    boxBtn: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', backgroundColor: 'white', paddingTop: 11, paddingBottom: 11, paddingHorizontal: 11, borderColor: '#A0A0A0', borderWidth: 1.2, borderRadius: 5 },
     boxBtnLeftText: { fontFamily: 'NotoSansTC-Medium', lineHeight: 24, fontSize: 19, color: 'black' },
     boxBtnRightText: { fontFamily: 'NotoSansTC-bold', lineHeight: 24, fontWeight: 'bold', fontSize: 19, color: 'black' },
     horizonLine: { borderBottomWidth: 0.5, borderColor: "#A0A0A0", height: 26, marginTop: 3, marginBottom: 29 },
@@ -511,35 +552,31 @@ const styles = StyleSheet.create({
     completeBtnText: { fontFamily: 'NotoSansTC-bold', fontSize: 14, color: 'white', fontWeight: 'bold', marginTop: 5 },
     backBtn: { flexDirection: 'row', alignItems: "center", },
     backText: { color: 'white', fontWeight: 'bold', marginTop: 5, fontSize: 16 },
-    comDescriptionBox: { backgroundColor: '#F2F2F2', paddingHorizontal: 15, paddingTop: 8, paddingBottom: 8 },
+    comDescriptionBox: { backgroundColor: '#F2F2F2', paddingHorizontal: 11, paddingTop: 8, paddingBottom: 8 },
     comDescriptionBoxScrolled: { paddingBottom: 0 },
-    comContent: { backgroundColor: '#F2F2F2', paddingHorizontal: 12, paddingTop: 10, paddingBottom: 12 },
+    comContent: { flex: 1, backgroundColor: '#F2F2F2', paddingHorizontal: 9, paddingTop: 10, paddingBottom: 12, overflow: 'visible' },
+    scrollWrapper: { position: 'relative', flex: 1, overflow: 'visible' },
+    scrollbarTrack: { position: 'absolute', top: 0, right: -9, bottom: 0, width: 3, borderRadius: 1.5, backgroundColor: 'rgba(0,0,0,0.15)' },
+    scrollbarThumb: { position: 'absolute', left: 0, right: 0, borderRadius: 1.5, backgroundColor: 'rgba(0,0,0,0.4)' },
     tableContainer: { marginBottom: 10, backgroundColor: '#F2F2F2', borderRadius: 10, overflow: 'hidden', width: '100%', maxWidth: 420, alignSelf: 'center', borderWidth: 1, borderColor: '#ddd' },
-    row: { flexDirection: 'row', alignItems: 'flex-start', paddingHorizontal: 15, paddingVertical: 5, backgroundColor: '#fff', borderBottomWidth: 1, borderBottomColor: '#aaa' },
-    headerRow: { backgroundColor: '#888', minHeight: 44, paddingHorizontal: 15, alignItems: 'center' },
+    row: { flexDirection: 'row', alignItems: 'flex-start', paddingHorizontal: 11, paddingVertical: 5, backgroundColor: '#fff', borderBottomWidth: 1, borderBottomColor: '#aaa' },
+    headerRow: { backgroundColor: '#888', minHeight: 44, paddingHorizontal: 11, alignItems: 'center' },
     headerText: { width: 130, fontFamily: 'NotoSansTC-Medium', fontWeight: '600', fontSize: 20, lineHeight: 24, color: '#fff' },
-    headerValueText: { flex: 1, flexWrap: 'wrap', paddingLeft: 15, marginRight: 16, fontFamily: 'NotoSansTC-Medium', lineHeight: 24, fontSize: 20, color: '#fff' },
-    headerRightGroup: { flex: 1, flexDirection: 'row', alignItems: 'center', paddingLeft: 15, gap: 8 },
+    headerValueText: { flex: 1, flexWrap: 'wrap', paddingLeft: 11, marginRight: 16, fontFamily: 'NotoSansTC-Medium', lineHeight: 24, fontSize: 20, color: '#fff' },
+    headerRightGroup: { flex: 1, flexDirection: 'row', alignItems: 'center', paddingLeft: 11, gap: 8 },
     headerValueTextAlign: { flex: 0, paddingLeft: 0, marginRight: 0 },
     headerRightSpacer: { flex: 1 },
     cellLabelWrapper: { width: 130, borderRightColor: '#aaa', borderRightWidth: 1, alignSelf: 'stretch', paddingVertical: 6 },
     cellText: { fontFamily: 'NotoSansTC-Medium', lineHeight: 20, fontSize: 18, color: 'black' },
-    cellValueText: { paddingVertical: 6, flex: 1, flexWrap: 'wrap', paddingLeft: 15, fontFamily: 'NotoSansTC-Medium', lineHeight: 20, fontSize: 18, color: 'black' },
+    cellValueText: { paddingVertical: 6, flex: 1, flexWrap: 'wrap', paddingLeft: 11, fontFamily: 'NotoSansTC-Medium', lineHeight: 20, fontSize: 18, color: 'black' },
     shareButton: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        backgroundColor: '#FFD700', // Gold/yellow color
-        borderRadius: 20,
-        paddingHorizontal: 12,
-        paddingVertical: 2,
-        shadowColor: '#000',
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.2,
-        shadowRadius: 3,
-        elevation: 3, // For Android shadow
+        padding: 0,
+        backgroundColor: 'transparent',
+        marginLeft: -10,
     },
-    shareIcon: {
-        marginRight: 8,
+    shareButtonImage: {
+        height: 32,
+        minWidth: 100,
     },
     shareText: {
         fontFamily: 'NotoSansTC-Medium',
