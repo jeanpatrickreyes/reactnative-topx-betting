@@ -40,7 +40,7 @@ export default function TabLayout() {
       }}
     >
       <Tabs.Screen name="index" options={{ ...tabOptions('图标1.png', '主頁'), title: '主頁' }} />
-      <Tabs.Screen name="discover" options={{ ...tabOptions('图标2.png', '馬上發現', { showBadge: true }), title: '馬上發現' }} />
+      <Tabs.Screen name="discover" options={{ ...tabOptions('图标2.png', '馬上發現'), title: '馬上發現' }} />
       <Tabs.Screen name="betslip" options={{ ...tabOptions('图标3.png', '投注區'), title: '投注區' }} />
       <Tabs.Screen name="ewallet" options={{ ...tabOptions('图标4.png', '電子錢包', { iconHeight: 30, iconWidth: 30 }), title: '電子錢包' }} />
       <Tabs.Screen name="more" options={{ ...tabOptions('图标5.png', '更多'), title: '更多' }} />

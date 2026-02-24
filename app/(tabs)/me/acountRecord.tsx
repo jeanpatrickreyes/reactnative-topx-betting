@@ -541,7 +541,7 @@ const styles = StyleSheet.create({
     },
     shareText: {
         fontFamily: 'NotoSansTC-Medium',
-        fontSize: 14,
+        fontSize: 18,
         color: 'black',
         fontWeight: '600',
         includeFontPadding: false
