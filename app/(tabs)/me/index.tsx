@@ -140,9 +140,9 @@ export default function ProfileScreen() {
               <TouchableOpacity onPress={() => router.push("/(tabs)/me/editProfile")} style={styles.twoButtonRow} activeOpacity={0.8}>
                 <View style={styles.suggestionView}>
                   <View style={styles.twoButtonIconWrap}>
-                    <MaterialCommunityIcons name="comment-text" size={28} color="#002460" />
+                  <Image source={require('../../../assets/images/land-2.png')} style={styles.twoButtonIcon} resizeMode="contain" />
                   </View>
-                  <Text style={styles.suggestionText}>意見/建議</Text>
+                  <Text style={styles.suggestionText}>意見/ 建議</Text>
                 </View>
                 <MaterialCommunityIcons name="chevron-right" size={24} color="black" />
               </TouchableOpacity>
@@ -150,7 +150,7 @@ export default function ProfileScreen() {
               <TouchableOpacity style={styles.twoButtonRow} activeOpacity={0.8}>
                 <View style={styles.suggestionView}>
                   <View style={styles.twoButtonIconWrap}>
-                    <Image source={require('../../../assets/images/pencil.jpeg')} style={styles.twoButtonIcon} resizeMode="contain" />
+                    <Image source={require('../../../assets/images/land-3.png')} style={styles.twoButtonIcon} resizeMode="contain" />
                   </View>
                   <Text style={styles.suggestionText}>編輯資料</Text>
                 </View>
@@ -327,8 +327,8 @@ const styles = StyleSheet.create({
     marginVertical: -10,
   },
   twoButtonIcon: {
-    width: 36,
-    height: 36,
+    width: 28,
+    height: 28,
   },
   suggestion: {
     width: '100%', 
