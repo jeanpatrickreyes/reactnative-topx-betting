@@ -136,18 +136,27 @@ export default function ProfileScreen() {
             </View>
         </View>  
             
-            <TouchableOpacity onPress={() => router.push("/(tabs)/me/editProfile")}>
-              <View style={styles.suggestion}>
-                  <View style={styles.suggestionView}>
-                      <Image 
-                        source={require('../../../assets/images/圖片_20250201015436.png')} 
-                        style={{ width: 32, height: 32, resizeMode: 'contain' }} // Adjust size accordingly
-                      />
-                      <Text style={styles.suggestionText}>意見/建議</Text>
+            <View style={styles.twoButtonCard}>
+              <TouchableOpacity onPress={() => router.push("/(tabs)/me/editProfile")} style={styles.twoButtonRow} activeOpacity={0.8}>
+                <View style={styles.suggestionView}>
+                  <View style={styles.twoButtonIconWrap}>
+                    <MaterialCommunityIcons name="comment-text" size={28} color="#002460" />
                   </View>
-                  <MaterialCommunityIcons name="chevron-right" size={24} color="black" />
-              </View>
-            </TouchableOpacity>
+                  <Text style={styles.suggestionText}>意見/建議</Text>
+                </View>
+                <MaterialCommunityIcons name="chevron-right" size={24} color="black" />
+              </TouchableOpacity>
+              <View style={styles.twoButtonDivider} />
+              <TouchableOpacity style={styles.twoButtonRow} activeOpacity={0.8}>
+                <View style={styles.suggestionView}>
+                  <View style={styles.twoButtonIconWrap}>
+                    <Image source={require('../../../assets/images/pencil.jpeg')} style={styles.twoButtonIcon} resizeMode="contain" />
+                  </View>
+                  <Text style={styles.suggestionText}>編輯資料</Text>
+                </View>
+                <MaterialCommunityIcons name="chevron-right" size={24} color="black" />
+              </TouchableOpacity>
+            </View>
             <TouchableOpacity style={styles.logout}>
                 <Text style={styles.logoutText}>登出</Text>
             </TouchableOpacity>
@@ -287,6 +296,40 @@ const styles = StyleSheet.create({
     fontSize: 19,
     color: '#555'
   },
+  twoButtonCard: {
+    width: '100%',
+    borderRadius: 10,
+    backgroundColor: '#fff',
+    marginTop: 26,
+    elevation: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 3,
+    overflow: 'hidden',
+  },
+  twoButtonRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingHorizontal: 10,
+    paddingVertical: 14,
+  },
+  twoButtonDivider: {
+    height: 1,
+    backgroundColor: '#E8E8E8',
+  },
+  twoButtonIconWrap: {
+    width: 40,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 0,
+    marginVertical: -10,
+  },
+  twoButtonIcon: {
+    width: 36,
+    height: 36,
+  },
   suggestion: {
     width: '100%', 
     borderWidth: 0,
@@ -309,6 +352,7 @@ const styles = StyleSheet.create({
   },
   suggestionView: {
     flexDirection: 'row',
+    alignItems: 'center',
   },
   suggestionText: {
     fontFamily: 'NotoSansTC-Medium',

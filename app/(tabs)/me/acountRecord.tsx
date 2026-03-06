@@ -442,7 +442,9 @@ export default function AccountRecordScreen() {
                                                 </TouchableOpacity>
                                             </View>
                                         ) : (
-                                            <Text style={rowIndex === 0 ? styles.headerValueText : styles.cellValueText}>{row.value}</Text>
+                                            <Text style={rowIndex === 0 ? styles.headerValueText : styles.cellValueText}>
+                                                {row.key === '細節' ? row.value.replace(/(\d+)\s*\+\s*\n\s*/g, '$1+ ') : row.value}
+                                            </Text>
                                         )}
                                     </RowWrapper>
                                     );
